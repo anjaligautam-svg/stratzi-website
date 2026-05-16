@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { AgentThread } from "./AgentThread";
+import { AuroraBackground } from "@/components/ui/aurora-background";
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -11,13 +12,7 @@ const fadeUp = {
 
 export function Hero() {
   return (
-    <section className="relative pt-32 md:pt-40 pb-20 md:pb-28 section-x overflow-hidden">
-      {/* Soft background wash */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,theme(colors.bg-warm)_0%,theme(colors.bg)_55%)]"
-      />
-
+    <AuroraBackground className="pt-32 md:pt-40 pb-20 md:pb-28 section-x">
       <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Left: copy */}
         <div className="lg:col-span-7">
@@ -70,7 +65,7 @@ export function Hero() {
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
-            <a href="#proof" className="btn-ghost">
+            <a href="#proof" className="btn-glass">
               See it in action
             </a>
           </motion.div>
@@ -93,15 +88,10 @@ export function Hero() {
         </div>
 
         {/* Right: agent thread */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.32 }}
-          className="lg:col-span-5"
-        >
+        <div className="lg:col-span-5 reveal reveal-d4">
           <AgentThread />
-        </motion.div>
+        </div>
       </div>
-    </section>
+    </AuroraBackground>
   );
 }

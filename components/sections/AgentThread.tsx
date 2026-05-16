@@ -79,64 +79,65 @@ export function AgentThread() {
 
   return (
     <div className="relative">
-      {/* Soft beige wash behind the card */}
-      <div
-        aria-hidden
-        className="absolute -inset-8 rounded-[2rem] bg-bg-warm/70"
-      />
-
-      <motion.div
-        animate={{ y: [0, -4, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="relative rounded-2xl border border-line-warm bg-surface p-5 md:p-6 shadow-[0_24px_60px_-30px_rgba(63,41,29,0.25)]"
-      >
-        {/* Window chrome */}
-        <div className="flex items-center justify-between border-b border-line pb-3 mb-4">
-          <div className="flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-taupe-soft" />
-            <div className="h-2 w-2 rounded-full bg-taupe-soft" />
-            <div className="h-2 w-2 rounded-full bg-primary-edge" />
+      {/* Tinted-brown glass frame around the chat card —
+          backdrop blur + a soft brown wash gives the card a clear "stage"
+          distinct from the aurora background. Acts as a larger border. */}
+      <div className="relative rounded-[1.75rem] bg-brown-soft/15 backdrop-blur-xl border border-brown-soft/20 p-5 md:p-7 shadow-[0_30px_80px_-40px_rgba(63,41,29,0.35)]">
+        <motion.div
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="relative rounded-2xl border border-line-warm bg-surface p-5 md:p-6 shadow-[0_24px_60px_-30px_rgba(63,41,29,0.25)]"
+        >
+          {/* Window chrome */}
+          <div className="flex items-center justify-between border-b border-line pb-3 mb-4">
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-taupe-soft" />
+              <div className="h-2 w-2 rounded-full bg-taupe-soft" />
+              <div className="h-2 w-2 rounded-full bg-primary-edge" />
+            </div>
+            <div className="text-[10px] font-semibold tracking-[0.16em] uppercase text-ink-subtle">
+              Stratzi Agent · Live
+            </div>
           </div>
-          <div className="text-[10px] font-semibold tracking-[0.16em] uppercase text-ink-subtle">
-            Stratzi Agent · Live
+
+          {/* Messages — locked to a fixed height so the card doesn't reflow
+              as messages are added/removed during the auto-cycling loop.
+              h-[460px] fits the worst case (all 7 steps including quotes). */}
+          <div className="flex flex-col gap-3 h-[420px] md:h-[460px] overflow-hidden">
+            <AnimatePresence>
+              {script.slice(0, visibleCount).map((step, i) => (
+                <motion.div
+                  key={`${i}-${visibleCount}`}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className={[
+                    "flex items-start gap-3",
+                    step.role === "ha" ? "flex-row-reverse" : "",
+                  ].join(" ")}
+                >
+                  <Avatar role={step.role} />
+                  <Bubble step={step} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Messages */}
-        <div className="flex flex-col gap-3 min-h-[320px] md:min-h-[360px]">
-          <AnimatePresence>
-            {script.slice(0, visibleCount).map((step, i) => (
-              <motion.div
-                key={`${i}-${visibleCount}`}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.4,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className={[
-                  "flex items-start gap-3",
-                  step.role === "ha" ? "flex-row-reverse" : "",
-                ].join(" ")}
-              >
-                <Avatar role={step.role} />
-                <Bubble step={step} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-      </motion.div>
-
-      {/* Tiny meta strip under card */}
-      <div className="relative mt-4 flex items-center justify-between px-1 text-[10px] font-semibold tracking-[0.16em] uppercase text-ink-subtle">
-        <span>Insurance broking workflow</span>
-        <span className="flex items-center gap-1.5">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inset-0 rounded-full bg-primary-edge animate-ping opacity-60" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+        {/* Meta strip — lives inside the glass frame so it floats with the card */}
+        <div className="relative mt-4 flex items-center justify-between px-2 text-[10px] font-semibold tracking-[0.16em] uppercase text-ink-subtle">
+          <span>Insurance broking workflow</span>
+          <span className="flex items-center gap-1.5">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inset-0 rounded-full bg-primary-edge animate-ping opacity-60" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+            </span>
+            Running
           </span>
-          Running
-        </span>
+        </div>
       </div>
     </div>
   );

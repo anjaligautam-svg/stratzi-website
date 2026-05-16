@@ -39,7 +39,7 @@ export function Navbar() {
             <a
               key={l.href}
               href={l.href}
-              className="text-[13px] font-medium text-ink-muted hover:text-primary transition-colors"
+              className="text-[15px] font-medium text-ink-muted hover:text-primary transition-colors"
             >
               {l.label}
             </a>

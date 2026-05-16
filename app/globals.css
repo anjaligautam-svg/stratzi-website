@@ -19,9 +19,11 @@
   --color-ink-subtle: #6f7978;
   --color-ink-faint: #bfc8c8;
 
-  /* Primary teal */
-  --color-primary: #003434;
-  --color-primary-hover: #044f4f;
+  /* Primary teal — lifted from #003434 (very dark) to #2c666e (mid teal,
+     more lively against the warm beige surfaces). hover goes slightly darker
+     for press-down feel. soft / edge stay since they pair well with both. */
+  --color-primary: #2c666e;
+  --color-primary-hover: #1f5159;
   --color-primary-soft: #b0eeed;
   --color-primary-edge: #80bdbc;
 
@@ -63,6 +65,11 @@
   --font-body: var(--font-body), "Inter", system-ui, sans-serif;
   --font-sans: var(--font-body), "Inter", system-ui, sans-serif;
   --font-logo: var(--font-logo), "Quicksand", system-ui, sans-serif;
+
+  /* Custom animation utility — registers `animate-aurora` so Tailwind v4
+     can use it (including with variant prefixes like `after:animate-aurora`).
+     The @keyframes itself is declared in @layer components below. */
+  --animate-aurora: aurora 60s linear infinite;
 
   /* Radius scale */
   --radius: 0.5rem;
@@ -107,6 +114,13 @@
 }
 
 @layer components {
+  /* Aurora background keyframes — utility is registered via the
+     `--animate-aurora` token in @theme above. */
+  @keyframes aurora {
+    from { background-position: 50% 50%, 50% 50%; }
+    to   { background-position: 350% 50%, 350% 50%; }
+  }
+
   /* Mount-fade-up animation — replaces broken framer-motion Reveal */
   @keyframes reveal-fade-up {
     from { opacity: 0; transform: translateY(16px); }
@@ -237,6 +251,33 @@
   }
   .btn-ghost:hover {
     border-color: var(--color-taupe);
+    color: var(--color-primary);
+  }
+
+  /* Tinted-brown glass CTA — matches the AgentThread outer frame.
+     Used for secondary actions that should feel cohesive with that
+     glass card (e.g. the hero's "See it in action" link). */
+  .btn-glass {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--color-ink);
+    padding: 0.875rem 1.5rem;
+    border-radius: 9999px;
+    background-color: color-mix(in oklab, var(--color-brown-soft) 15%, transparent);
+    border: 1px solid color-mix(in oklab, var(--color-brown-soft) 22%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+  .btn-glass:hover {
+    background-color: color-mix(in oklab, var(--color-brown-soft) 22%, transparent);
+    border-color: color-mix(in oklab, var(--color-brown-soft) 32%, transparent);
     color: var(--color-primary);
   }
 }
