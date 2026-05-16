@@ -4,6 +4,8 @@ import { Footer } from "@/components/sections/Footer";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { CareersForm } from "@/components/CareersForm";
 import { WebGLShader } from "@/components/ui/web-gl-shader";
+import { TiltCard } from "@/components/ui/tilt-card";
+import { SpecialText } from "@/components/ui/special-text";
 
 export const metadata: Metadata = {
   title: "Careers — Stratzi",
@@ -12,6 +14,7 @@ export const metadata: Metadata = {
 };
 
 type Role = {
+  number: string;
   title: string;
   blurb: string;
   expectations: string[];
@@ -19,6 +22,7 @@ type Role = {
 
 const roles: Role[] = [
   {
+    number: "01",
     title: "App Developer (React Native / Flutter)",
     blurb:
       "Build performant, user-friendly mobile applications from the ground up — both for our internal products and client-facing tools.",
@@ -29,6 +33,7 @@ const roles: Role[] = [
     ],
   },
   {
+    number: "02",
     title: "Front-end Developer (Web + App)",
     blurb:
       "If you live and breathe interfaces, this one's for you. Build smooth, responsive UIs that work across web and mobile, helping us bring our designs and ideas to life.",
@@ -40,6 +45,7 @@ const roles: Role[] = [
     ],
   },
   {
+    number: "03",
     title: "DevOps Engineer",
     blurb:
       "Be the glue between code and cloud. Help us automate everything, keep systems reliable, and scale our infrastructure with confidence.",
@@ -51,55 +57,50 @@ const roles: Role[] = [
   },
 ];
 
-const perks = [
-  {
-    title: "Flexible hours",
-    body: "Trust-based work, not clock-punching.",
-  },
-  {
-    title: "AI-tool driven",
-    body: "We use modern tools to move faster and smarter.",
-  },
-  {
-    title: "Learning opportunities",
-    body: "Upskill budgets, hack days, freedom to explore.",
-  },
-  {
-    title: "Performance-driven growth",
-    body: "Promotions based on output, not time.",
-  },
-  {
-    title: "Trust, transparency & memes",
-    body: "We're a startup that believes in people over processes.",
-  },
-];
-
 export default function CareersPage() {
   return (
     <>
       <Navbar />
       <main className="flex flex-col">
-        {/* Page hero */}
+        {/* Page hero — centered header block. The display headline is
+            currently a plain element; a text animation will wrap it later
+            (the user is providing the animation code separately). */}
         <section className="relative pt-36 md:pt-44 pb-16 md:pb-20 section-x overflow-hidden">
           <div
             aria-hidden
             className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,theme(colors.bg-warm)_0%,theme(colors.bg)_55%)]"
           />
           <div className="mx-auto max-w-[1440px]">
-            <div className="max-w-3xl">
+            <div className="max-w-3xl mx-auto text-center">
               <Reveal>
                 <div className="eyebrow">We are hiring</div>
               </Reveal>
               <Reveal delay={0.08}>
                 <h1 className="display-xl mt-6">
-                  Be part of{" "}
-                  <span className="text-primary italic font-medium">
+                  {/* SpecialText scrambles each segment then settles to the
+                      real text. Both segments inherit the .display-xl font
+                      (Montserrat 700 + clamp size + ink color) from the h1;
+                      the second segment overrides color + weight + italic
+                      so the final state matches the prior static markup.
+
+                      `inView={false}` means animate on mount (the hero is
+                      always above the fold) — framer-motion's `useInView`
+                      proved unreliable with App Router hydration. */}
+                  <SpecialText delay={0.4} speed={28}>
+                    Be part of
+                  </SpecialText>
+                  {" "}
+                  <SpecialText
+                    delay={0.9}
+                    speed={28}
+                    className="text-primary italic font-medium"
+                  >
                     our mission.
-                  </span>
+                  </SpecialText>
                 </h1>
               </Reveal>
               <Reveal delay={0.16}>
-                <p className="mt-7 max-w-2xl text-[17px] md:text-[18px] leading-relaxed text-ink-muted">
+                <p className="mt-7 mx-auto max-w-2xl text-[17px] md:text-[18px] leading-relaxed text-ink-muted">
                   At Stratzi, we're not just building AI-powered products,
                   we're rethinking how software gets built and delivered.
                   From smart apps to scalable services, we focus on solving
@@ -110,7 +111,7 @@ export default function CareersPage() {
           </div>
         </section>
 
-        {/* Open roles */}
+        {/* Open roles — same UI / animation as home Pillars cards */}
         <section className="section-pad section-x bg-bg">
           <div className="mx-auto max-w-[1440px]">
             <div className="max-w-2xl">
@@ -128,56 +129,20 @@ export default function CareersPage() {
             </div>
 
             <Stagger
-              className="mt-12 md:mt-16 flex flex-col gap-4"
-              staggerChildren={0.1}
+              className="mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-6"
+              staggerChildren={0.12}
             >
               {roles.map((r) => (
-                <StaggerItem key={r.title}>
-                  <RoleCard role={r} />
-                </StaggerItem>
-              ))}
-            </Stagger>
-          </div>
-        </section>
-
-        {/* Perks */}
-        <section className="section-pad section-x bg-bg-warm/60">
-          <div className="mx-auto max-w-[1440px]">
-            <div className="max-w-2xl">
-              <Reveal>
-                <div className="eyebrow">Perks & vibes</div>
-              </Reveal>
-              <Reveal delay={0.08}>
-                <h2 className="headline-lg mt-5">
-                  We're not corporate and we{" "}
-                  <span className="text-primary italic font-medium">
-                    don't pretend to be.
-                  </span>
-                </h2>
-              </Reveal>
-              <Reveal delay={0.16}>
-                <p className="mt-5 text-[16px] leading-relaxed text-ink-muted">
-                  We're a startup that believes in people over processes.
-                  Here's what you get.
-                </p>
-              </Reveal>
-            </div>
-
-            <Stagger
-              className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4"
-              staggerChildren={0.08}
-            >
-              {perks.map((p) => (
-                <StaggerItem key={p.title}>
-                  <article className="h-full rounded-2xl border border-line-warm bg-surface p-6">
-                    <span className="block h-1.5 w-6 rounded-full bg-primary" />
-                    <h3 className="mt-5 font-heading text-[16px] font-semibold leading-snug text-ink">
-                      {p.title}
-                    </h3>
-                    <p className="mt-2 text-[13.5px] leading-relaxed text-ink-muted">
-                      {p.body}
-                    </p>
-                  </article>
+                <StaggerItem key={r.number} className="h-full">
+                  <TiltCard
+                    tiltLimit={7}
+                    scale={1.02}
+                    effect="evade"
+                    spotlightColor="rgba(176, 238, 237, 0.18)"
+                    className="h-full rounded-2xl"
+                  >
+                    <RoleCard role={r} />
+                  </TiltCard>
                 </StaggerItem>
               ))}
             </Stagger>
@@ -263,60 +228,69 @@ export default function CareersPage() {
   );
 }
 
+/**
+ * RoleCard — same UI/animation pattern as home Pillars cards.
+ * Wrapped in TiltCard by the parent for tilt + spotlight.
+ */
 function RoleCard({ role }: { role: Role }) {
   return (
-    <article className="group rounded-2xl border border-line bg-surface p-7 md:p-9 transition-colors hover:border-primary-edge">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
-        <div className="lg:col-span-5">
-          <h3 className="font-heading text-[22px] md:text-[26px] font-semibold leading-[1.2] tracking-[-0.005em] text-ink">
-            {role.title}
-          </h3>
-          <p className="mt-3 text-[14.5px] leading-relaxed text-ink-muted">
-            {role.blurb}
-          </p>
-        </div>
-        <div className="lg:col-span-6">
-          <div className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-primary">
-            What we're looking for
-          </div>
-          <ul className="mt-3 flex flex-col gap-2.5">
-            {role.expectations.map((e) => (
-              <li
-                key={e}
-                className="flex items-start gap-2.5 text-[13.5px] leading-snug text-ink"
-              >
-                <span className="mt-1 text-primary font-semibold leading-none">
-                  →
-                </span>
-                <span>{e}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="lg:col-span-1 lg:text-right flex lg:justify-end">
-          <a
-            href="#apply"
-            className="inline-flex items-center gap-2 text-[12px] font-semibold tracking-[0.04em] text-primary border-b border-primary/40 pb-0.5 hover:border-primary transition-colors self-start"
+    <article className="relative h-full rounded-2xl border border-primary-edge/45 bg-surface p-7 md:p-9 overflow-hidden flex flex-col">
+      {/* Top row — numeral circle + label (Pillars pattern) */}
+      <div className="relative flex items-center gap-3">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-edge bg-primary-soft/30 font-heading text-[13px] font-semibold text-primary">
+          {role.number}
+        </span>
+        <span className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-ink-subtle">
+          Open role
+        </span>
+      </div>
+
+      <h3 className="headline-md relative mt-5">{role.title}</h3>
+
+      <p className="relative mt-3 text-[14.5px] leading-relaxed text-ink">
+        {role.blurb}
+      </p>
+
+      {/* Bullet list — same → marker as Pillars */}
+      <ul className="relative mt-7 flex flex-col gap-2.5 flex-1">
+        {role.expectations.map((e) => (
+          <li
+            key={e}
+            className="flex items-start gap-2.5 text-[13px] leading-snug text-ink"
           >
-            Apply
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="transition-transform group-hover:translate-x-1"
-            >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </a>
+            <span className="mt-1 text-primary font-semibold leading-none">
+              →
+            </span>
+            <span>{e}</span>
+          </li>
+        ))}
+      </ul>
+
+      {/* Bottom block — Pillars' "In action" position becomes "Apply" CTA */}
+      <div className="relative mt-8 border-t border-primary-edge/30 pt-5">
+        <div className="text-[10px] font-semibold tracking-[0.18em] uppercase text-primary">
+          Apply
         </div>
+        <a
+          href="#apply"
+          className="mt-2 inline-flex items-center gap-2 text-[13px] font-medium text-ink hover:text-primary transition-colors"
+        >
+          Send your application
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
       </div>
     </article>
   );
 }
-
