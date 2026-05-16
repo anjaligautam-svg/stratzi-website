@@ -5,6 +5,9 @@
  * Lives in its own client component because the parent page is server-rendered
  * (server components cannot receive function props like onSubmit).
  *
+ * Styled for the dark-teal gradient background of the apply section —
+ * frosted glass card, white text, light teal accents.
+ *
  * Submission is currently a no-op — wire to a real handler (Formspree,
  * Resend, /api route, etc.) before launch. See DECISIONS.md.
  */
@@ -12,7 +15,7 @@ export function CareersForm() {
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
-      className="rounded-2xl border border-line bg-surface p-7 md:p-9 shadow-[0_24px_60px_-40px_rgba(63,41,29,0.25)]"
+      className="rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-xl p-7 md:p-9 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)]"
     >
       <Field label="Full name" type="text" placeholder="Full name" />
       <Field
@@ -35,13 +38,13 @@ export function CareersForm() {
       />
 
       <div className="mt-4">
-        <label className="block text-[10.5px] font-semibold tracking-[0.16em] uppercase text-ink-subtle mb-2">
+        <label className="block text-[10.5px] font-semibold tracking-[0.16em] uppercase text-white/65 mb-2">
           Why join us? (max 200 words)
         </label>
         <textarea
           rows={4}
           placeholder="Tell us a bit about yourself…"
-          className="w-full bg-bg border border-line text-ink text-[14px] px-4 py-3 rounded-lg outline-none transition-colors focus:border-primary focus:bg-surface placeholder:text-ink-faint resize-none"
+          className="w-full bg-white/[0.04] border border-white/15 text-white text-[14px] px-4 py-3 rounded-lg outline-none transition-colors focus:border-primary-soft focus:bg-white/[0.07] placeholder:text-white/35 resize-none"
         />
       </div>
 
@@ -81,13 +84,13 @@ function Field({
 }) {
   return (
     <div className={className}>
-      <label className="block text-[10.5px] font-semibold tracking-[0.16em] uppercase text-ink-subtle mb-2">
+      <label className="block text-[10.5px] font-semibold tracking-[0.16em] uppercase text-white/65 mb-2">
         {label}
       </label>
       <input
         type={type}
         placeholder={placeholder}
-        className="w-full bg-bg border border-line text-ink text-[14px] px-4 py-3 rounded-lg outline-none transition-colors focus:border-primary focus:bg-surface placeholder:text-ink-faint"
+        className="w-full bg-white/[0.04] border border-white/15 text-white text-[14px] px-4 py-3 rounded-lg outline-none transition-colors focus:border-primary-soft focus:bg-white/[0.07] placeholder:text-white/35"
       />
     </div>
   );

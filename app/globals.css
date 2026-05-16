@@ -121,6 +121,42 @@
     to   { background-position: 350% 50%, 350% 50%; }
   }
 
+  /* CpuArchitecture — glowing dots travel along offset-paths. Each
+     `.cpu-line-N` aligns with the matching <path> in the component.
+     Durations and delays are staggered so the 12 lines never pulse
+     in unison (would feel mechanical). */
+  .cpu-architecture {
+    offset-anchor: 0 0;
+    animation: cpu-flow infinite;
+    animation-timing-function: cubic-bezier(0.75, -0.01, 0, 0.99);
+  }
+
+  .cpu-line-1  { offset-path: path("M 10 20 h 79.5 q 5 0 5 5 v 30"); animation-duration: 5s;  animation-delay: 1s;  }
+  .cpu-line-2  { offset-path: path("M 180 10 h -69.7 q -5 0 -5 5 v 40"); animation-duration: 5s;  animation-delay: 3s;  }
+  .cpu-line-3  { offset-path: path("M 130 20 v 21.8 q 0 5 -5 5 h -25"); animation-duration: 6s;  animation-delay: 4s;  }
+  .cpu-line-4  { offset-path: path("M 170 80 v -21.8 q 0 -5 -5 -5 h -65"); animation-duration: 4s;  animation-delay: 2s;  }
+  .cpu-line-5  { offset-path: path("M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -35"); animation-duration: 6s;  animation-delay: 9s;  }
+  .cpu-line-6  { offset-path: path("M 94.8 95 v -46"); animation-duration: 7s;  animation-delay: 3s;  }
+  .cpu-line-7  { offset-path: path("M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 28"); animation-duration: 5s;  animation-delay: 6s;  }
+  .cpu-line-8  { offset-path: path("M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 35"); animation-duration: 4s;  animation-delay: 1.5s; }
+  /* New paths 9–12 to add density */
+  .cpu-line-9  { offset-path: path("M 5 70 h 70 q 5 0 5 -5 v -15"); animation-duration: 6s;  animation-delay: 2.5s; }
+  .cpu-line-10 { offset-path: path("M 195 30 h -55 q -5 0 -5 5 v 15"); animation-duration: 5s;  animation-delay: 4.5s; }
+  .cpu-line-11 { offset-path: path("M 175 95 v -25 q 0 -5 -5 -5 h -40"); animation-duration: 7s;  animation-delay: 7s;   }
+  .cpu-line-12 { offset-path: path("M 5 5 v 25 q 0 5 5 5 h 70 q 5 0 5 5 v 10"); animation-duration: 6s;  animation-delay: 8s;   }
+  /* Paths 13–18 — six more branches for visual density */
+  .cpu-line-13 { offset-path: path("M 50 5 v 25 q 0 5 5 5 h 35"); animation-duration: 5s;  animation-delay: 0.5s; }
+  .cpu-line-14 { offset-path: path("M 195 75 h -65 q -5 0 -5 -5 v -5"); animation-duration: 6s;  animation-delay: 5.5s; }
+  .cpu-line-15 { offset-path: path("M 195 50 h -75"); animation-duration: 4s;  animation-delay: 10s;  }
+  .cpu-line-16 { offset-path: path("M 60 95 h 30 q 5 0 5 -5 v -25"); animation-duration: 7s;  animation-delay: 11s;  }
+  .cpu-line-17 { offset-path: path("M 165 5 h -35 q -5 0 -5 5 v 30"); animation-duration: 5s;  animation-delay: 12s;  }
+  .cpu-line-18 { offset-path: path("M 5 50 h 25 q 5 0 5 5 v 5 q 0 5 5 5 h 40"); animation-duration: 6s;  animation-delay: 13s;  }
+
+  @keyframes cpu-flow {
+    0%   { offset-distance: 0%; }
+    100% { offset-distance: 100%; }
+  }
+
   /* Mount-fade-up animation — replaces broken framer-motion Reveal */
   @keyframes reveal-fade-up {
     from { opacity: 0; transform: translateY(16px); }

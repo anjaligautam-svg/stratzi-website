@@ -3,6 +3,7 @@ import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { CareersForm } from "@/components/CareersForm";
+import { WebGLShader } from "@/components/ui/web-gl-shader";
 
 export const metadata: Metadata = {
   title: "Careers — Stratzi",
@@ -204,23 +205,37 @@ export default function CareersPage() {
           </div>
         </section>
 
-        {/* How to apply */}
+        {/* How to apply — same dark-teal gradient + bottom shader treatment
+            as the home page's Get-in-touch CTA, but content stays focused on
+            hiring (CareersForm + hiring@stratzi.ai). */}
         <section
           id="apply"
-          className="section-pad section-x bg-bg-warm/60 relative overflow-hidden"
+          className="relative isolate section-pad section-x text-white overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(180deg, #0f3a42 0%, #0a2a30 55%, #061d22 100%)",
+          }}
         >
-          <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          {/* Bottom-anchored shader, top fade so it emerges from the dark. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[280px] md:h-[360px] z-0 [mask-image:linear-gradient(to_bottom,transparent_0%,black_55%,black_100%)]"
+          >
+            <WebGLShader intensity={0.45} speed={0.7} />
+          </div>
+
+          <div className="relative z-10 mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             {/* Left: copy */}
             <div>
               <Reveal>
-                <div className="eyebrow">How to apply</div>
+                <div className="eyebrow eyebrow-on-dark">How to apply</div>
               </Reveal>
               <Reveal delay={0.08}>
-                <h2 className="headline-lg mt-5">
+                <h2 className="headline-lg mt-5 text-white">
                   Drop us a line at{" "}
                   <a
                     href="mailto:hiring@stratzi.ai"
-                    className="text-primary italic font-medium underline-offset-4 hover:underline"
+                    className="text-primary-soft italic font-medium underline-offset-4 hover:underline"
                   >
                     hiring@stratzi.ai
                   </a>
@@ -228,7 +243,7 @@ export default function CareersPage() {
                 </h2>
               </Reveal>
               <Reveal delay={0.16}>
-                <p className="mt-5 max-w-lg text-[16px] leading-relaxed text-ink-muted">
+                <p className="mt-5 max-w-lg text-[16px] leading-relaxed text-white/80">
                   Send your CV, GitHub, portfolio, or a short note about
                   something you've built or loved working on. Or fill in the
                   form on the right.
@@ -236,7 +251,7 @@ export default function CareersPage() {
               </Reveal>
             </div>
 
-            {/* Right: application form (decorative for now — see CareersForm) */}
+            {/* Right: application form (CareersForm uses dark-mode styling) */}
             <Reveal delay={0.16}>
               <CareersForm />
             </Reveal>

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
+import { CTA } from "@/components/sections/CTA";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { CpuArchitecture } from "@/components/ui/cpu-architecture";
+import { TiltCard } from "@/components/ui/tilt-card";
 
 export const metadata: Metadata = {
   title: "AI Solutions — Stratzi",
@@ -101,14 +104,16 @@ export default function SolutionsPage() {
     <>
       <Navbar />
       <main className="flex flex-col">
-        {/* Page hero */}
+        {/* Page hero — 2-col with copy left, CpuArchitecture in a glassy
+            white/teal-tinted card on the right. */}
         <section className="relative pt-36 md:pt-44 pb-16 md:pb-20 section-x overflow-hidden">
           <div
             aria-hidden
             className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,theme(colors.bg-warm)_0%,theme(colors.bg)_55%)]"
           />
-          <div className="mx-auto max-w-[1440px]">
-            <div className="max-w-3xl">
+          <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Left: copy */}
+            <div className="lg:col-span-6">
               <Reveal>
                 <div className="eyebrow">AI Solutions</div>
               </Reveal>
@@ -149,6 +154,52 @@ export default function SolutionsPage() {
                 </div>
               </Reveal>
             </div>
+
+            {/* Right: glassy white/teal-tinted container with the Company
+                Brain animation. Two-layer treatment — soft teal wash behind +
+                frosted glass card in front — gives the "modern, glassy" feel
+                requested while staying on-brand. */}
+            <Reveal delay={0.32} className="lg:col-span-6">
+              <div className="relative">
+                {/* Outer soft teal halo */}
+                <div
+                  aria-hidden
+                  className="absolute -inset-8 rounded-[2.5rem] bg-primary-soft/25 blur-2xl"
+                />
+                {/* Glass card — bumped padding + aspect for more presence */}
+                <div className="relative rounded-3xl border border-primary-edge/30 bg-white/55 backdrop-blur-xl p-6 md:p-9 shadow-[0_40px_100px_-50px_rgba(44,102,110,0.4)]">
+                  {/* Window-chrome row for a modern UI vibe */}
+                  <div className="flex items-center justify-between border-b border-primary-edge/20 pb-4 mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-primary-soft/70" />
+                      <div className="h-2 w-2 rounded-full bg-primary-soft/70" />
+                      <div className="h-2 w-2 rounded-full bg-primary-edge" />
+                    </div>
+                    <div className="text-[10px] font-semibold tracking-[0.16em] uppercase text-primary/70">
+                      Architecture · Live
+                    </div>
+                  </div>
+
+                  {/* The animation itself — taller aspect (4/3 was 2/1)
+                      so the branches have room to breathe */}
+                  <div className="aspect-[4/3] w-full">
+                    <CpuArchitecture />
+                  </div>
+
+                  {/* Quiet meta row underneath */}
+                  <div className="mt-4 flex items-center justify-between text-[10px] font-semibold tracking-[0.16em] uppercase text-primary/70">
+                    <span>18 data streams</span>
+                    <span className="flex items-center gap-1.5">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inset-0 rounded-full bg-primary-edge animate-ping opacity-60" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+                      </span>
+                      Processing
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -157,37 +208,8 @@ export default function SolutionsPage() {
           <CategoryBlock key={cat.heading} category={cat} alt={i % 2 === 1} />
         ))}
 
-        {/* CTA */}
-        <section className="section-pad section-x bg-bg-warm/60">
-          <div className="mx-auto max-w-[1440px] grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-center">
-            <Reveal>
-              <h2 className="headline-lg">
-                Curious which of these fit{" "}
-                <span className="text-primary italic font-medium">
-                  your operations?
-                </span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <a href="/#cta" className="btn-primary whitespace-nowrap">
-                Book a discovery call
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </a>
-            </Reveal>
-          </div>
-        </section>
+        {/* CTA — same "Get in touch" form as home */}
+        <CTA />
       </main>
       <Footer />
     </>
@@ -224,14 +246,23 @@ function CategoryBlock({
             </Reveal>
           </div>
 
-          {/* Right: cards */}
+          {/* Right: cards — wrapped in TiltCard so they share the home
+              Pillars' tilt + spotlight interaction. Card size unchanged. */}
           <Stagger
             className="lg:col-span-8 flex flex-col gap-4"
             staggerChildren={0.08}
           >
             {category.cards.map((c) => (
               <StaggerItem key={c.name}>
-                <SolutionCardBlock card={c} />
+                <TiltCard
+                  tiltLimit={7}
+                  scale={1.02}
+                  effect="evade"
+                  spotlightColor="rgba(176, 238, 237, 0.18)"
+                  className="h-full rounded-2xl"
+                >
+                  <SolutionCardBlock card={c} />
+                </TiltCard>
               </StaggerItem>
             ))}
           </Stagger>
@@ -243,14 +274,14 @@ function CategoryBlock({
 
 function SolutionCardBlock({ card }: { card: SolutionCard }) {
   return (
-    <article className="group rounded-2xl border border-line bg-surface p-7 md:p-8 transition-colors hover:border-primary-edge flex items-start gap-5">
+    <article className="rounded-2xl border border-primary-edge/45 bg-surface p-7 md:p-8 flex items-start gap-5 h-full">
       {/* Tiny accent mark */}
       <span className="mt-2 inline-block h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
       <div className="flex-1">
         <h3 className="font-heading text-[20px] md:text-[22px] font-semibold leading-snug tracking-[-0.005em] text-ink">
           {card.name}
         </h3>
-        <p className="mt-2.5 text-[14.5px] leading-relaxed text-ink-muted">
+        <p className="mt-2.5 text-[14.5px] leading-relaxed text-ink">
           {card.body}
         </p>
       </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
+import { CTA } from "@/components/sections/CTA";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 
 export const metadata: Metadata = {
@@ -102,37 +103,8 @@ export default function CaseStudiesPage() {
           </div>
         </section>
 
-        {/* CTA back to discovery call */}
-        <section className="section-pad section-x bg-bg-warm/60">
-          <div className="mx-auto max-w-[1440px] grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-center">
-            <Reveal>
-              <h2 className="headline-lg">
-                Want to see what this looks like for{" "}
-                <span className="text-primary italic font-medium">
-                  your business?
-                </span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <a href="/#cta" className="btn-primary whitespace-nowrap">
-                Book a discovery call
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </a>
-            </Reveal>
-          </div>
-        </section>
+        {/* CTA — same "Get in touch" form as home */}
+        <CTA />
       </main>
       <Footer />
     </>
