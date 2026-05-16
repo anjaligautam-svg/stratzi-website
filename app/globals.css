@@ -62,6 +62,7 @@
   --font-heading: var(--font-heading), "Montserrat", system-ui, sans-serif;
   --font-body: var(--font-body), "Inter", system-ui, sans-serif;
   --font-sans: var(--font-body), "Inter", system-ui, sans-serif;
+  --font-logo: var(--font-logo), "Quicksand", system-ui, sans-serif;
 
   /* Radius scale */
   --radius: 0.5rem;
@@ -106,6 +107,24 @@
 }
 
 @layer components {
+  /* Mount-fade-up animation — replaces broken framer-motion Reveal */
+  @keyframes reveal-fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: reveal-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .reveal-d1 { animation-delay: 0.08s; }
+  .reveal-d2 { animation-delay: 0.16s; }
+  .reveal-d3 { animation-delay: 0.24s; }
+  .reveal-d4 { animation-delay: 0.32s; }
+  .reveal-d5 { animation-delay: 0.40s; }
+  .reveal-d6 { animation-delay: 0.48s; }
+
   /* Section vertical padding — single source of truth */
   .section-pad {
     padding-top: 6rem;       /* 96px */

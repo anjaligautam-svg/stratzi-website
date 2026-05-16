@@ -1,6 +1,20 @@
 # Stratzi — Page Structure
 
-> Target: **5–6 scrolls total**. Each section ≈ 1 viewport on desktop.
+> Home is **5–6 scrolls total**. Each section ≈ 1 viewport on desktop. Sub-pages (`/solutions`, `/case-studies`, `/careers`) are 2–4 scrolls each.
+
+## Routes
+
+| Route | File | Status |
+|---|---|---|
+| `/` | `app/page.tsx` | ✅ Built |
+| `/solutions` | `app/solutions/page.tsx` | ✅ Built |
+| `/case-studies` | `app/case-studies/page.tsx` | ✅ Built |
+| `/careers` | `app/careers/page.tsx` | ✅ Built |
+
+## Navigation (Navbar)
+
+Top-right links → `/solutions` · `/case-studies` · `/careers` · **Get in touch** (CTA button → `/#cta`).
+The Logo (top-left) always links to `/`.
 
 ## Page: `/` (Home)
 
@@ -108,34 +122,52 @@ Composed in `app/page.tsx` from section components in `components/sections/`.
 - Top border, generous vertical padding, no other clutter
 - Skip mega-footer with sitemap — out of scope
 
+## Sub-pages (briefs)
+
+### `/solutions`
+Editorial hero (eyebrow "AI Solutions" + headline "Unlock the power of AI to drive *business transformation*"), then 4 category blocks (Generative AI, Retrieval & Search, Document Processing, Predictive AI) — each block has a 12-col layout: 4-col category header on the left, 8-col card list on the right. Alternating `bg-bg` / `bg-bg-warm/40` for vertical rhythm. CTA at bottom links to `/#cta`.
+
+### `/case-studies`
+Hero ("Transformative *case studies*"), then a 2-col grid of 4 study cards. Each card has a giant background numeral (01–04), sector eyebrow, title, description, and "Read the full study →" affordance. CTA at bottom. Note: study PDFs are external Google Drive links from the old site — flag for future relocation.
+
+### `/careers`
+Hero ("We are hiring" + "Be part of *our mission*"), open roles section (3 roles with 12-col card layout: title + blurb on left, expectations bullets in middle, "Apply →" link on right), perks section (5 small cards on `bg-bg-warm`), "A note from us" pull-quote block, and "How to apply" with email + decorative `<CareersForm />` (extracted as client component because the parent page is server-rendered).
+
 ## File layout
 
 ```
 stratzi-website/
 ├── app/
-│   ├── layout.tsx          # Root layout, fonts, metadata
-│   ├── page.tsx            # Home — composes all sections
-│   ├── globals.css         # Tailwind v4 + design tokens (@theme)
+│   ├── layout.tsx              # Root layout, fonts (Montserrat + Inter + Quicksand), metadata
+│   ├── page.tsx                # Home — composes all sections
+│   ├── globals.css             # Tailwind v4 + design tokens + .reveal CSS animation
+│   ├── case-studies/page.tsx   # Sub-page
+│   ├── solutions/page.tsx      # Sub-page
+│   ├── careers/page.tsx        # Sub-page
 │   └── favicon.ico
 ├── components/
+│   ├── Logo.tsx                # Stratzi.AI wordmark (Quicksand teal + taupe-brown cursor)
+│   ├── CareersForm.tsx         # Client form (parent page is server component)
 │   ├── sections/
 │   │   ├── Navbar.tsx
 │   │   ├── Hero.tsx
+│   │   ├── AgentThread.tsx
 │   │   ├── Pillars.tsx
 │   │   ├── HowItWorks.tsx
 │   │   ├── Proof.tsx
 │   │   ├── CTA.tsx
 │   │   └── Footer.tsx
-│   ├── ui/                 # shadcn primitives + custom UI (Button, Input, etc.)
-│   └── motion/             # Reusable: FadeUp, Stagger, BreatheLoop
+│   ├── ui/                     # shadcn primitives
+│   └── motion/
+│       └── Reveal.tsx          # CSS-driven Reveal + Stagger + StaggerItem (no framer-motion)
 ├── lib/
-│   └── utils.ts            # cn() helper (shadcn)
+│   └── utils.ts                # cn() helper (shadcn)
 ├── public/
 │   ├── favicon.ico
-│   └── media/              # Logos, hero artifact assets
+│   └── media/                  # Logos, hero artifact assets
 ├── BRIEF.md
 ├── DESIGN.md
-├── STRUCTURE.md            # This file
+├── STRUCTURE.md                # This file
 ├── PROGRESS.md
 └── DECISIONS.md
 ```

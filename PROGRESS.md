@@ -2,6 +2,28 @@
 
 > Chronological log. Newest first.
 
+## 2026-05-16 (late evening) — Logo + 3 sub-pages
+
+**Logo**
+- Built `components/Logo.tsx` — Stratzi.AI wordmark in Quicksand (`font-logo` token, loaded via `next/font/google`) colored with `text-primary` (deep teal `#003434`), plus a custom-drawn cursor SVG glyph colored with `text-brown-soft` (`#583F32`).
+- Replaced text "STRATZI" mark in both `Navbar.tsx` and `Footer.tsx`.
+- Old logo (white text + light-blue cyan cursor) replaced with brand-aligned palette.
+
+**Sub-pages built**
+- ✅ `/case-studies` — Hero + 4 case-study cards (Financial Reporting / Loan Approval / RAG / Cancer Biomarker). Content carried over verbatim from current stratzi.ai.
+- ✅ `/solutions` — Hero + 4 category blocks (Generative AI / Retrieval / Document Processing / Predictive AI) with 10 sub-product cards across them.
+- ✅ `/careers` — Hero + 3 open roles + 5 perks + note + decorative application form.
+
+**Navbar**
+- Switched from anchor links (`#pillars`, `#how`, `#proof`) to real page routes (`/solutions`, `/case-studies`, `/careers`).
+- "Get in touch" CTA → `/#cta` (always lands on home contact form).
+
+**Motion system rewrite**
+- Replaced framer-motion-based `Reveal` / `Stagger` / `StaggerItem` with pure CSS keyframe animation (`.reveal` class + delay buckets in `globals.css`). Reason: framer-motion 12's `whileInView` and `useInView` had timing issues with Next.js 16 + React 19 hydration, leaving elements stuck at opacity 0. CSS animation is simpler and fires reliably on mount.
+
+**Bug fixed**
+- `app/careers/page.tsx` originally inlined the form with an `onSubmit` handler — Next.js rejected this because server components can't receive function props. Extracted to `components/CareersForm.tsx` as a `"use client"` component.
+
 ## 2026-05-16 (evening) — Full v1 build shipped
 
 All 5 sections + nav + footer built and rendering. Compiles clean, dev server boots in ~350ms.

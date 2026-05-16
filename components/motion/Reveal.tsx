@@ -1,18 +1,39 @@
-"use client";
-
-import { motion, type Variants } from "framer-motion";
-import { type ReactNode } from "react";
+import { Children, cloneElement, isValidElement, type ReactNode } from "react";
 
 /**
- * Reveal: single-element scroll-triggered fade + Y translate.
- * Used as the atomic motion primitive across the site.
+ * Reveal — fade + Y translate via CSS animation.
+ *
+ * We initially built this with framer-motion's `whileInView` + `useInView`,
+ * but in this Next.js 16 / React 19 / framer-motion 12 stack the motion.div
+ * elements were getting stuck at their initial state (opacity 0) and the
+ * animation never fired on mount or scroll. Switching to a pure CSS keyframe
+ * animation eliminates the hydration / observer edge case entirely and gives
+ * us identical visual behavior.
+ *
+ * Delays map to predefined classes (reveal-d1..d6) in globals.css.
  */
+
+const delayClass: Record<number, string> = {
+  0: "",
+  1: "reveal-d1",
+  2: "reveal-d2",
+  3: "reveal-d3",
+  4: "reveal-d4",
+  5: "reveal-d5",
+  6: "reveal-d6",
+};
+
+function resolveDelayClass(delay: number) {
+  // Old API: delay in seconds (0, 0.08, 0.16, …) — map to bucket index.
+  if (delay <= 0) return delayClass[0];
+  const bucket = Math.round(delay / 0.08);
+  return delayClass[Math.min(bucket, 6)] ?? "";
+}
+
 export function Reveal({
   children,
   delay = 0,
-  y = 16,
-  className,
-  once = true,
+  className = "",
 }: {
   children: ReactNode;
   delay?: number;
@@ -20,81 +41,64 @@ export function Reveal({
   className?: string;
   once?: boolean;
 }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
+  const cls = `reveal ${resolveDelayClass(delay)} ${className}`.trim();
+  return <div className={cls}>{children}</div>;
 }
 
 /**
- * Stagger: container that staggers Reveal children with a per-child delay.
- * Children should be wrapped in <Reveal> already, or use plain elements
- * — Stagger applies framer's stagger via parent/child variants.
+ * Stagger / StaggerItem — group of reveal items with sequential delays.
+ * Each StaggerItem child gets a delay based on its index.
  */
-const containerVariants: Variants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.05,
-    },
-  },
-};
-
-const childVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-  },
-};
-
 export function Stagger({
   children,
-  className,
+  className = "",
   staggerChildren = 0.08,
 }: {
   children: ReactNode;
   className?: string;
   staggerChildren?: number;
 }) {
+  // Auto-inject `index` prop into each StaggerItem child so they get
+  // sequential animation delays without callers having to pass it manually.
+  const indexed = Children.map(children, (child, i) => {
+    if (isValidElement(child)) {
+      return cloneElement(
+        child as React.ReactElement<{ index?: number }>,
+        { index: i }
+      );
+    }
+    return child;
+  });
+
   return (
-    <motion.div
-      variants={{
-        hidden: {},
-        show: { transition: { staggerChildren, delayChildren: 0.05 } },
-      }}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
+    <div
       className={className}
+      style={
+        {
+          "--stagger-step": `${staggerChildren}s`,
+        } as React.CSSProperties
+      }
     >
-      {children}
-    </motion.div>
+      {indexed}
+    </div>
   );
 }
 
 export function StaggerItem({
   children,
-  className,
+  className = "",
+  index = 0,
 }: {
   children: ReactNode;
   className?: string;
+  index?: number;
 }) {
+  const style = {
+    animationDelay: `calc(var(--stagger-step, 0.08s) * ${index})`,
+  };
   return (
-    <motion.div variants={childVariants} className={className}>
+    <div className={`reveal ${className}`.trim()} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }
-
-// Exported for cases where we need direct framer variants
-export { containerVariants, childVariants };

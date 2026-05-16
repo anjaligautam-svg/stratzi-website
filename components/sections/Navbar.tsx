@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Logo } from "@/components/Logo";
 
 const navLinks = [
-  { label: "What we build", href: "#pillars" },
-  { label: "How it works", href: "#how" },
-  { label: "Proof", href: "#proof" },
+  { label: "Solutions", href: "/solutions" },
+  { label: "Case studies", href: "/case-studies" },
+  { label: "Careers", href: "/careers" },
 ];
 
 export function Navbar() {
@@ -31,12 +31,7 @@ export function Navbar() {
     >
       <div className="section-x mx-auto flex h-16 max-w-[1440px] items-center justify-between md:h-[72px]">
         {/* Logo */}
-        <Link
-          href="/"
-          className="font-heading text-[15px] font-semibold tracking-[0.18em] text-ink uppercase"
-        >
-          STR<span className="text-primary">A</span>TZI
-        </Link>
+        <Logo size="sm" />
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
@@ -49,7 +44,7 @@ export function Navbar() {
               {l.label}
             </a>
           ))}
-          <a href="#cta" className="btn-primary text-[12.5px] px-5 py-2.5">
+          <a href="/#cta" className="btn-primary text-[12.5px] px-5 py-2.5">
             Get in touch
           </a>
         </nav>
@@ -99,7 +94,7 @@ export function Navbar() {
               </a>
             ))}
             <a
-              href="#cta"
+              href="/#cta"
               onClick={() => setOpen(false)}
               className="btn-primary w-full justify-center"
             >
