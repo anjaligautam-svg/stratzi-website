@@ -3,6 +3,11 @@ import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { CTA } from "@/components/sections/CTA";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { TiltCard } from "@/components/ui/tilt-card";
+import {
+  CaseStudiesOrbital,
+  caseStudiesCount,
+} from "@/components/CaseStudiesOrbital";
 
 export const metadata: Metadata = {
   title: "Case Studies — Stratzi",
@@ -56,14 +61,15 @@ export default function CaseStudiesPage() {
     <>
       <Navbar />
       <main className="flex flex-col">
-        {/* Page hero */}
+        {/* Page hero — 2-col: copy left, orbital animation in glassy card right */}
         <section className="relative pt-36 md:pt-44 pb-16 md:pb-20 section-x overflow-hidden">
           <div
             aria-hidden
             className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,theme(colors.bg-warm)_0%,theme(colors.bg)_55%)]"
           />
-          <div className="mx-auto max-w-[1440px]">
-            <div className="max-w-3xl">
+          <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Left: copy */}
+            <div className="lg:col-span-6">
               <Reveal>
                 <div className="eyebrow">Case studies</div>
               </Reveal>
@@ -84,10 +90,50 @@ export default function CaseStudiesPage() {
                 </p>
               </Reveal>
             </div>
+
+            {/* Right: orbital animation in a glassy white/teal-tinted card */}
+            <Reveal delay={0.32} className="lg:col-span-6">
+              <div className="relative">
+                {/* Soft teal halo behind the card */}
+                <div
+                  aria-hidden
+                  className="absolute -inset-8 rounded-[2.5rem] bg-primary-soft/25 blur-2xl"
+                />
+                {/* Glass card */}
+                <div className="relative rounded-3xl border border-primary-edge/30 bg-white/55 backdrop-blur-xl p-6 md:p-9 shadow-[0_40px_100px_-50px_rgba(44,102,110,0.4)]">
+                  {/* Window-chrome row */}
+                  <div className="flex items-center justify-between border-b border-primary-edge/20 pb-4 mb-2">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-primary-soft/70" />
+                      <div className="h-2 w-2 rounded-full bg-primary-soft/70" />
+                      <div className="h-2 w-2 rounded-full bg-primary-edge" />
+                    </div>
+                    <div className="text-[10px] font-semibold tracking-[0.16em] uppercase text-primary/70">
+                      Deployments · Live
+                    </div>
+                  </div>
+
+                  {/* Orbital animation — click any node to see detail */}
+                  <CaseStudiesOrbital />
+
+                  {/* Quiet meta row */}
+                  <div className="mt-2 flex items-center justify-between text-[10px] font-semibold tracking-[0.16em] uppercase text-primary/70">
+                    <span>{caseStudiesCount} active workflows</span>
+                    <span className="flex items-center gap-1.5">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inset-0 rounded-full bg-primary-edge animate-ping opacity-60" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+                      </span>
+                      Orbiting
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 
-        {/* Case study cards */}
+        {/* Case study cards — same UI/animation as home Pillars */}
         <section className="section-pad section-x bg-bg">
           <div className="mx-auto max-w-[1440px]">
             <Stagger
@@ -95,8 +141,16 @@ export default function CaseStudiesPage() {
               staggerChildren={0.1}
             >
               {studies.map((s) => (
-                <StaggerItem key={s.number}>
-                  <StudyCard study={s} />
+                <StaggerItem key={s.number} className="h-full">
+                  <TiltCard
+                    tiltLimit={7}
+                    scale={1.02}
+                    effect="evade"
+                    spotlightColor="rgba(176, 238, 237, 0.18)"
+                    className="h-full rounded-2xl"
+                  >
+                    <StudyCard study={s} />
+                  </TiltCard>
                 </StaggerItem>
               ))}
             </Stagger>
@@ -113,47 +167,46 @@ export default function CaseStudiesPage() {
 
 function StudyCard({ study }: { study: CaseStudy }) {
   return (
-    <article className="group relative flex h-full flex-col rounded-2xl border border-line bg-surface p-8 md:p-10 transition-colors hover:border-primary-edge overflow-hidden">
-      {/* Big background numeral */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -right-3 -bottom-8 font-heading font-bold text-[180px] leading-none text-primary-soft/30 select-none"
-      >
-        {study.number}
-      </span>
-
+    <article className="relative h-full rounded-2xl border border-primary-edge/45 bg-surface p-7 md:p-9 overflow-hidden flex flex-col">
+      {/* Top row — numeral circle + sector eyebrow (same pattern as Pillars) */}
       <div className="relative flex items-center gap-3">
-        <span className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-primary">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-edge bg-primary-soft/30 font-heading text-[13px] font-semibold text-primary">
+          {study.number}
+        </span>
+        <span className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-ink-subtle">
           {study.sector}
         </span>
       </div>
 
-      <h3 className="relative mt-5 font-heading text-[24px] md:text-[28px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink">
-        {study.title}
-      </h3>
+      <h3 className="headline-md relative mt-5">{study.title}</h3>
 
-      <p className="relative mt-4 text-[14.5px] leading-relaxed text-ink-muted">
+      <p className="relative mt-3 text-[14.5px] leading-relaxed text-ink">
         {study.body}
       </p>
 
-      <div className="relative mt-auto pt-8 flex items-center gap-2 text-[12px] font-semibold tracking-[0.04em] text-primary">
-        <span className="border-b border-primary/40 pb-0.5 group-hover:border-primary transition-colors">
+      {/* Bottom block — "Read the full study" affordance, separated by divider
+          like Pillars' "In action" block */}
+      <div className="relative mt-auto pt-5 border-t border-primary-edge/30">
+        <div className="text-[10px] font-semibold tracking-[0.18em] uppercase text-primary">
           Read the full study
-        </span>
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="transition-transform group-hover:translate-x-1"
-        >
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12 5 19 12 12 19" />
-        </svg>
+        </div>
+        <div className="mt-2 flex items-center gap-2 text-[13px] text-ink-muted">
+          <span className="italic">External PDF — opens in a new tab</span>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-primary"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </div>
       </div>
     </article>
   );
