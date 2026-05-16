@@ -175,22 +175,31 @@
   .reveal-d5 { animation-delay: 0.40s; }
   .reveal-d6 { animation-delay: 0.48s; }
 
-  /* Section vertical padding — single source of truth */
+  /* Section vertical padding — single source of truth.
+     Mobile uses 4.5rem (72px) so sections don't bloat on tall narrow
+     viewports; desktop keeps the editorial 8rem (128px). */
   .section-pad {
-    padding-top: 6rem;       /* 96px */
-    padding-bottom: 6rem;
+    padding-top: 4.5rem;     /* 72px mobile */
+    padding-bottom: 4.5rem;
   }
   @media (min-width: 768px) {
     .section-pad {
-      padding-top: 8rem;     /* 128px */
+      padding-top: 8rem;     /* 128px desktop */
       padding-bottom: 8rem;
     }
   }
 
-  /* Section horizontal margins */
+  /* Section horizontal margins. 1rem (16px) on phones gives content room
+     to breathe without crushing the bezel. 5rem on desktop. */
   .section-x {
-    padding-left: 1.25rem;   /* 20px mobile */
-    padding-right: 1.25rem;
+    padding-left: 1rem;      /* 16px mobile */
+    padding-right: 1rem;
+  }
+  @media (min-width: 640px) {
+    .section-x {
+      padding-left: 1.5rem;  /* 24px small tablet */
+      padding-right: 1.5rem;
+    }
   }
   @media (min-width: 768px) {
     .section-x {

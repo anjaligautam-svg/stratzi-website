@@ -13,8 +13,8 @@ const fadeUp = {
 
 export function Hero() {
   return (
-    <AuroraBackground className="pt-32 md:pt-40 pb-8 md:pb-12 section-x">
-      <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+    <AuroraBackground className="pt-24 md:pt-40 pb-10 md:pb-12 section-x">
+      <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
         {/* Left: copy */}
         <div className="lg:col-span-7">
           <motion.div {...fadeUp} className="eyebrow">
@@ -50,7 +50,7 @@ export function Hero() {
             transition={{ ...fadeUp.transition, delay: 0.24 }}
             className="mt-9 flex flex-wrap items-center gap-3"
           >
-            <a href="#cta" className="btn-primary">
+            <Link href="/#cta" className="btn-primary">
               Book a discovery call
               <svg
                 width="14"
@@ -65,7 +65,7 @@ export function Hero() {
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
               </svg>
-            </a>
+            </Link>
             <Link href="/case-studies" className="btn-glass">
               See it in action
             </Link>
@@ -75,7 +75,7 @@ export function Hero() {
           <motion.div
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: 0.36 }}
-            className="mt-14 md:mt-20 flex flex-wrap items-center gap-x-5 gap-y-3 text-[10.5px] font-semibold tracking-[0.18em] uppercase text-ink-subtle"
+            className="mt-10 md:mt-20 flex flex-wrap items-center gap-x-4 gap-y-3 text-[10.5px] font-semibold tracking-[0.18em] uppercase text-ink-subtle"
           >
             <span className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-primary" />

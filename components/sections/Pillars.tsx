@@ -62,7 +62,7 @@ const pillars: Pillar[] = [
 
 export function Pillars() {
   return (
-    <section id="pillars" className="pt-16 md:pt-24 pb-24 md:pb-32 section-x bg-bg">
+    <section id="pillars" className="pt-12 md:pt-24 pb-16 md:pb-32 section-x bg-bg">
       <div className="mx-auto max-w-[1440px]">
         {/* Header — centered */}
         <div className="max-w-3xl mx-auto text-center">
@@ -89,7 +89,7 @@ export function Pillars() {
 
         {/* Pillar cards */}
         <Stagger
-          className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-6"
+          className="mt-12 md:mt-20 grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6"
           staggerChildren={0.12}
         >
           {pillars.map((p) => (
@@ -114,7 +114,7 @@ export function Pillars() {
 function PillarCard({ pillar }: { pillar: Pillar }) {
   return (
     <article
-      className="relative h-full rounded-2xl border border-primary-edge/45 bg-surface p-7 md:p-9 overflow-hidden flex flex-col"
+      className="relative h-full rounded-2xl border border-primary-edge/45 bg-surface p-6 md:p-9 overflow-hidden flex flex-col"
     >
       {/* Top */}
       <div className="relative flex items-center gap-3">

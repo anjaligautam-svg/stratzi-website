@@ -27,7 +27,7 @@ export function CTA() {
         <WebGLShader intensity={0.45} speed={0.7} />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+      <div className="relative z-10 mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
         {/* Left: copy */}
         <div>
           <Reveal>
@@ -50,12 +50,12 @@ export function CTA() {
           </Reveal>
 
           <Reveal delay={0.24}>
-            <div className="mt-10 flex items-center gap-3 text-[12px] text-white/70">
+            <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 text-[12px] text-white/70">
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary-soft" />
                 We respond within 24 hours
               </span>
-              <span className="text-white/30">·</span>
+              <span className="text-white/30 hidden sm:inline">·</span>
               <span>No sales pressure</span>
             </div>
           </Reveal>
@@ -66,7 +66,7 @@ export function CTA() {
         <Reveal delay={0.16}>
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-xl p-7 md:p-9 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)]"
+            className="rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-xl p-6 md:p-9 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)]"
           >
             <Field label="Your name" type="text" placeholder="Full name" />
             <Field

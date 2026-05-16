@@ -86,16 +86,17 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile drawer — full-width slide-down panel triggered by the
+          hamburger. Tap targets are ≥48px tall so it feels right on touch. */}
       {open && (
-        <div className="md:hidden border-t border-line bg-bg">
-          <div className="section-x py-6 flex flex-col gap-5">
+        <div className="md:hidden border-t border-line bg-bg/95 backdrop-blur-md">
+          <div className="section-x py-4 flex flex-col">
             {navLinks.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-base font-medium text-ink"
+                className="text-[17px] font-medium text-ink py-3.5 border-b border-line/60 last:border-b-0 hover:text-primary transition-colors"
               >
                 {l.label}
               </Link>
@@ -103,7 +104,7 @@ export function Navbar() {
             <Link
               href="/#cta"
               onClick={() => setOpen(false)}
-              className="btn-primary w-full justify-center"
+              className="btn-primary w-full justify-center mt-4 py-3.5"
             >
               Get in touch
             </Link>

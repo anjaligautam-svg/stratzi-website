@@ -105,22 +105,23 @@ export function HowItWorks() {
 
 function PhaseRow({ phase }: { phase: Phase }) {
   return (
-    <div className="group relative grid grid-cols-12 gap-6 lg:gap-10 border-b border-white/15 py-10 md:py-12 transition-colors hover:bg-white/[0.06]">
+    <div className="group relative grid grid-cols-12 gap-3 md:gap-6 lg:gap-10 border-b border-white/15 py-8 md:py-12 transition-colors hover:bg-white/[0.06]">
       {/* Left accent that slides in on hover */}
       <span
         aria-hidden
         className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary-soft scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-500 ease-out"
       />
 
-      {/* Number */}
+      {/* Number — smaller on mobile so it pairs visually with the title
+          on the next row rather than dominating its own row */}
       <div className="col-span-12 md:col-span-2">
-        <div className="font-heading text-[44px] md:text-[52px] font-medium leading-none text-white/40">
+        <div className="font-heading text-[26px] md:text-[52px] font-medium leading-none text-white/40">
           {phase.number}
         </div>
       </div>
 
       {/* Title + body */}
-      <div className="col-span-12 md:col-span-6">
+      <div className="col-span-12 md:col-span-6 -mt-1 md:mt-0">
         <h3 className="headline-md text-white">{phase.title}</h3>
         <p className="mt-3 max-w-xl text-[14.5px] leading-relaxed text-white/80">
           {phase.body}
@@ -128,7 +129,7 @@ function PhaseRow({ phase }: { phase: Phase }) {
       </div>
 
       {/* Deliverable */}
-      <div className="col-span-12 md:col-span-4">
+      <div className="col-span-12 md:col-span-4 mt-3 md:mt-0">
         <div className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-primary-soft">
           Deliverable
         </div>
