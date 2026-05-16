@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { AgentThread } from "./AgentThread";
 import { AuroraBackground } from "@/components/ui/aurora-background";
@@ -65,9 +66,9 @@ export function Hero() {
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
-            <a href="/case-studies" className="btn-glass">
+            <Link href="/case-studies" className="btn-glass">
               See it in action
-            </a>
+            </Link>
           </motion.div>
 
           {/* Quiet proof strip */}

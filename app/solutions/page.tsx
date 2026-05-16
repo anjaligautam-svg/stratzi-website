@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { CTA } from "@/components/sections/CTA";
@@ -135,7 +136,7 @@ export default function SolutionsPage() {
               </Reveal>
               <Reveal delay={0.24}>
                 <div className="mt-9">
-                  <a href="/#cta" className="btn-primary">
+                  <Link href="/#cta" className="btn-primary">
                     Get in touch
                     <svg
                       width="14"
@@ -150,7 +151,7 @@ export default function SolutionsPage() {
                       <line x1="5" y1="12" x2="19" y2="12" />
                       <polyline points="12 5 19 12 12 19" />
                     </svg>
-                  </a>
+                  </Link>
                 </div>
               </Reveal>
             </div>

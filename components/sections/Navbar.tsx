@@ -1,7 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/Logo";
+
+// IMPORTANT: every internal route here uses Next's <Link>, NOT <a>.
+// Reason — when the site is deployed under a basePath (e.g. GitHub Pages
+// at /stratzi-website), `<Link>` automatically prepends the prefix so the
+// browser navigates to /stratzi-website/solutions. Plain `<a href="/solutions">`
+// goes to the root /solutions → 404.
 
 const navLinks = [
   { label: "Solutions", href: "/solutions" },
@@ -36,17 +43,17 @@ export function Navbar() {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               className="text-[15px] font-medium text-ink-muted hover:text-primary transition-colors"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
-          <a href="/#cta" className="btn-primary text-[12.5px] px-5 py-2.5">
+          <Link href="/#cta" className="btn-primary text-[12.5px] px-5 py-2.5">
             Get in touch
-          </a>
+          </Link>
         </nav>
 
         {/* Mobile toggle */}
@@ -84,22 +91,22 @@ export function Navbar() {
         <div className="md:hidden border-t border-line bg-bg">
           <div className="section-x py-6 flex flex-col gap-5">
             {navLinks.map((l) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
                 className="text-base font-medium text-ink"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
-            <a
+            <Link
               href="/#cta"
               onClick={() => setOpen(false)}
               className="btn-primary w-full justify-center"
             >
               Get in touch
-            </a>
+            </Link>
           </div>
         </div>
       )}
