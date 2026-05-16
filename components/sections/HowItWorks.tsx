@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal, Stagger, StaggerItem } from "../motion/Reveal";
+import { BGPattern } from "@/components/ui/bg-pattern";
 
 type Phase = {
   number: string;
@@ -42,23 +43,43 @@ const phases: Phase[] = [
 
 export function HowItWorks() {
   return (
-    <section id="how" className="section-pad section-x bg-bg-warm/60">
-      <div className="mx-auto max-w-[1440px]">
+    <section
+      id="how"
+      className="relative isolate section-pad section-x text-white overflow-hidden"
+      style={{
+        // Premium dark-teal gradient: deeper, richer than the flat primary
+        // tone. Top is a refined deep teal, bottom drops to near-black with
+        // a subtle teal undertone for visual depth.
+        background:
+          "linear-gradient(180deg, #0f3a42 0%, #0a2a30 55%, #061d22 100%)",
+      }}
+    >
+      {/* Subtle dot pattern overlay — primary-soft tinted, low alpha,
+          fade-edges mask so dots concentrate in the center and don't
+          fight the section boundaries. */}
+      <BGPattern
+        variant="dots"
+        mask="fade-edges"
+        size={26}
+        fill="rgba(176, 238, 237, 0.16)"
+      />
+
+      <div className="relative z-10 mx-auto max-w-[1440px]">
         {/* Header */}
         <div className="max-w-3xl">
           <Reveal>
-            <div className="eyebrow">How it works</div>
+            <div className="eyebrow eyebrow-on-dark">How it works</div>
           </Reveal>
           <Reveal delay={0.08}>
-            <h2 className="headline-lg mt-5">
+            <h2 className="headline-lg mt-5 text-white">
               Four phases.{" "}
-              <span className="text-primary italic font-medium">
+              <span className="text-primary-soft italic font-medium">
                 One transformation.
               </span>
             </h2>
           </Reveal>
           <Reveal delay={0.16}>
-            <p className="mt-5 max-w-2xl text-[16.5px] leading-relaxed text-ink-muted">
+            <p className="mt-5 max-w-2xl text-[16.5px] leading-relaxed text-white/80">
               Every Stratzi deployment is scoped to your exact business — your
               workflows, your tools, your team's actual work. Not a generic
               template applied and abandoned.
@@ -68,7 +89,7 @@ export function HowItWorks() {
 
         {/* Phases */}
         <Stagger
-          className="mt-14 md:mt-20 border-t border-line-warm"
+          className="mt-14 md:mt-20 border-t border-white/15"
           staggerChildren={0.1}
         >
           {phases.map((p) => (
@@ -84,34 +105,34 @@ export function HowItWorks() {
 
 function PhaseRow({ phase }: { phase: Phase }) {
   return (
-    <div className="group relative grid grid-cols-12 gap-6 lg:gap-10 border-b border-line-warm py-10 md:py-12 transition-colors hover:bg-surface/40">
+    <div className="group relative grid grid-cols-12 gap-6 lg:gap-10 border-b border-white/15 py-10 md:py-12 transition-colors hover:bg-white/[0.06]">
       {/* Left accent that slides in on hover */}
       <span
         aria-hidden
-        className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-500 ease-out"
+        className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary-soft scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-500 ease-out"
       />
 
       {/* Number */}
       <div className="col-span-12 md:col-span-2">
-        <div className="font-heading text-[44px] md:text-[52px] font-medium leading-none text-taupe">
+        <div className="font-heading text-[44px] md:text-[52px] font-medium leading-none text-white/40">
           {phase.number}
         </div>
       </div>
 
       {/* Title + body */}
       <div className="col-span-12 md:col-span-6">
-        <h3 className="headline-md text-ink">{phase.title}</h3>
-        <p className="mt-3 max-w-xl text-[14.5px] leading-relaxed text-ink-muted">
+        <h3 className="headline-md text-white">{phase.title}</h3>
+        <p className="mt-3 max-w-xl text-[14.5px] leading-relaxed text-white/80">
           {phase.body}
         </p>
       </div>
 
       {/* Deliverable */}
       <div className="col-span-12 md:col-span-4">
-        <div className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-primary">
+        <div className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-primary-soft">
           Deliverable
         </div>
-        <p className="mt-2.5 text-[14px] leading-relaxed text-ink">
+        <p className="mt-2.5 text-[14px] leading-relaxed text-white">
           {phase.deliverable}
         </p>
       </div>

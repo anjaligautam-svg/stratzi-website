@@ -12,7 +12,7 @@ const fadeUp = {
 
 export function Hero() {
   return (
-    <AuroraBackground className="pt-32 md:pt-40 pb-20 md:pb-28 section-x">
+    <AuroraBackground className="pt-32 md:pt-40 pb-8 md:pb-12 section-x">
       <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Left: copy */}
         <div className="lg:col-span-7">
@@ -65,7 +65,7 @@ export function Hero() {
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
-            <a href="#proof" className="btn-glass">
+            <a href="/case-studies" className="btn-glass">
               See it in action
             </a>
           </motion.div>

@@ -183,6 +183,15 @@
     background-color: var(--color-primary);
   }
 
+  /* Variant for dark backgrounds — white text + lighter underline.
+     Apply on top of `.eyebrow`, e.g. <div class="eyebrow eyebrow-on-dark">. */
+  .eyebrow-on-dark {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .eyebrow-on-dark::before {
+    background-color: var(--color-primary-soft);
+  }
+
   /* Display headline */
   .display-xl {
     font-family: var(--font-heading);

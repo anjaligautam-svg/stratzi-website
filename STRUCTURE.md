@@ -22,15 +22,14 @@ Composed in `app/page.tsx` from section components in `components/sections/`.
 
 | # | Section | Component | Approx height | Status | Notes |
 |---|---|---|---|---|---|
-| – | Navbar | `Navbar.tsx` | Sticky 64px | ⬜ Pending | Glass on scroll, subtle border-bottom |
-| 1 | **Hero** | `Hero.tsx` | 100vh | ⬜ Pending | Left-aligned headline + dual CTA + signature visual right |
-| 2 | **Three Pillars** | `Pillars.tsx` | ~100vh | ⬜ Pending | Company Brain / Agentic Employees / Learning Loops |
-| 3 | **How It Works** | `HowItWorks.tsx` | ~90vh | ⬜ Pending | Day 1 → Day 30 timeline (4 phases reframed) |
-| 4 | **Proof / Case Studies** | `Proof.tsx` | ~100vh | ⬜ Pending | Before/after framing for MyPolicyExpress + Finonest |
-| 5 | **CTA / Discovery Call** | `CTA.tsx` | ~80vh | ⬜ Pending | Form + reassurance copy |
-| – | Footer | `Footer.tsx` | ~30vh | ⬜ Pending | Logo, email, 2025, minimal |
+| – | Navbar | `Navbar.tsx` | Sticky 72px | ✅ Built | Aurora-friendly, glass on scroll |
+| 1 | **Hero** | `Hero.tsx` | ~100vh | ✅ Built | AuroraBackground + left copy + glass-wrapped chat thread |
+| 2 | **Three Pillars** | `Pillars.tsx` | ~100vh | ✅ Built | Center-aligned header, 3 TiltCard pillars with teal borders |
+| 3 | **How It Works** | `HowItWorks.tsx` | ~90vh | ✅ Built | 4-phase timeline (original framing) |
+| 4 | **CTA / Discovery Call** | `CTA.tsx` | ~80vh | ✅ Built | Decorative form + copy |
+| – | Footer | `Footer.tsx` | ~12vh | ✅ Built | Minimal single row |
 
-**Total: 5 sections + nav + footer ≈ 5.5 viewports on desktop.** Fits the brief.
+**Total: 4 sections + nav + footer ≈ 4–4.5 viewports.** Proof / case studies content lives on its own [/case-studies](app/case-studies/page.tsx) page (linked from nav + the hero's "See it in action" CTA).
 
 **Status legend**: ⬜ Pending · 🔨 Building · ✅ Done · 🐛 Needs polish
 

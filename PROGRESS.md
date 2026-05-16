@@ -2,6 +2,12 @@
 
 > Chronological log. Newest first.
 
+## 2026-05-16 (later) — Home layout polish
+
+- Trimmed the Hero→Pillars gap. Hero `pb` dropped from `pb-20 md:pb-28` to `pb-8 md:pb-12`; Pillars top padding overridden from `section-pad` (96/128px) to `pt-16 md:pt-24` (64/96px). Roughly 45% less whitespace at the seam.
+- Removed the **Proof** section from `app/page.tsx` — case studies now live exclusively on [/case-studies](app/case-studies/page.tsx). The hero's "See it in action" CTA now navigates there (was `#proof` anchor).
+- `components/sections/Proof.tsx` is kept on disk for now (still has the MyPolicyExpress / Finonest before-after copy in one place). Can delete in a future cleanup or re-mount on a different page.
+
 ## 2026-05-16 (late evening) — Logo + 3 sub-pages
 
 **Logo**

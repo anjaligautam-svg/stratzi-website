@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal, Stagger, StaggerItem } from "../motion/Reveal";
+import { TiltCard } from "@/components/ui/tilt-card";
 
 type Pillar = {
   numeral: string;
@@ -61,10 +62,10 @@ const pillars: Pillar[] = [
 
 export function Pillars() {
   return (
-    <section id="pillars" className="section-pad section-x bg-bg">
+    <section id="pillars" className="pt-16 md:pt-24 pb-24 md:pb-32 section-x bg-bg">
       <div className="mx-auto max-w-[1440px]">
-        {/* Header */}
-        <div className="max-w-3xl">
+        {/* Header — centered */}
+        <div className="max-w-3xl mx-auto text-center">
           <Reveal>
             <div className="eyebrow">What Stratzi builds</div>
           </Reveal>
@@ -77,7 +78,7 @@ export function Pillars() {
             </h2>
           </Reveal>
           <Reveal delay={0.16}>
-            <p className="mt-5 max-w-2xl text-[16.5px] leading-relaxed text-ink-muted">
+            <p className="mt-5 mx-auto max-w-2xl text-[16.5px] leading-relaxed text-ink-muted">
               Not a chatbot. Not a workflow tool. Not a one-time automation
               project. A full AI operations layer — architected to your
               business, built on the SaaS you already run, compounding in value
@@ -92,8 +93,16 @@ export function Pillars() {
           staggerChildren={0.12}
         >
           {pillars.map((p) => (
-            <StaggerItem key={p.numeral}>
-              <PillarCard pillar={p} />
+            <StaggerItem key={p.numeral} className="h-full">
+              <TiltCard
+                tiltLimit={7}
+                scale={1.02}
+                effect="evade"
+                spotlightColor="rgba(176, 238, 237, 0.18)"
+                className="h-full rounded-2xl"
+              >
+                <PillarCard pillar={p} />
+              </TiltCard>
             </StaggerItem>
           ))}
         </Stagger>
@@ -105,16 +114,8 @@ export function Pillars() {
 function PillarCard({ pillar }: { pillar: Pillar }) {
   return (
     <article
-      className="group relative h-full rounded-2xl border border-line bg-surface p-7 md:p-9 transition-colors duration-300 hover:border-primary-edge overflow-hidden flex flex-col"
+      className="relative h-full rounded-2xl border border-primary-edge/45 bg-surface p-7 md:p-9 overflow-hidden flex flex-col"
     >
-      {/* Background numeral */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -right-2 -bottom-6 font-heading font-bold text-[160px] leading-none text-primary-soft/40 select-none"
-      >
-        {pillar.numeral}
-      </span>
-
       {/* Top */}
       <div className="relative flex items-center gap-3">
         <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-edge bg-primary-soft/30 font-heading text-[13px] font-semibold text-primary">
@@ -127,7 +128,7 @@ function PillarCard({ pillar }: { pillar: Pillar }) {
 
       <h3 className="headline-md relative mt-5">{pillar.name}</h3>
 
-      <p className="relative mt-3 text-[14.5px] leading-relaxed text-ink-muted">
+      <p className="relative mt-3 text-[14.5px] leading-relaxed text-ink">
         {pillar.description}
       </p>
 
@@ -135,7 +136,7 @@ function PillarCard({ pillar }: { pillar: Pillar }) {
         {pillar.bullets.map((b) => (
           <li
             key={b}
-            className="flex items-start gap-2.5 text-[13px] leading-snug text-ink-muted"
+            className="flex items-start gap-2.5 text-[13px] leading-snug text-ink"
           >
             <span className="mt-1 text-primary font-semibold leading-none">
               →
@@ -146,11 +147,11 @@ function PillarCard({ pillar }: { pillar: Pillar }) {
       </ul>
 
       {/* In-action example */}
-      <div className="relative mt-8 border-t border-line pt-5">
+      <div className="relative mt-8 border-t border-primary-edge/30 pt-5">
         <div className="text-[10px] font-semibold tracking-[0.18em] uppercase text-primary">
           In action
         </div>
-        <p className="mt-2 italic text-[13px] leading-relaxed text-taupe">
+        <p className="mt-2 italic text-[13px] leading-relaxed text-brown">
           {pillar.example}
         </p>
       </div>
