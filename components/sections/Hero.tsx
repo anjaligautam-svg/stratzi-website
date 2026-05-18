@@ -26,11 +26,10 @@ export function Hero() {
             transition={{ ...fadeUp.transition, delay: 0.08 }}
             className="display-xl mt-6"
           >
-            Your business should run on{" "}
+            Automate your business operations with{" "}
             <span className="text-primary italic font-medium">
-              intelligence,
+              intelligence that grows
             </span>
-            <br className="hidden sm:block" /> not headcount.
           </motion.h1>
 
           <motion.p
