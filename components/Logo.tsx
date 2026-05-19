@@ -1,21 +1,28 @@
+import Image from "next/image";
 import Link from "next/link";
 
 /**
- * Stratzi.AI wordmark.
- * Replaces the previous text-only "STRATZI" mark with the brand wordmark:
- * - "Stratzi.AI" in rounded sans (Quicksand) — colored with --color-primary (deep teal)
- * - A small cursor / AI-pointer glyph sitting next to "AI" — colored with --color-brown-soft (taupe brown)
+ * Stratzi.AI logo.
  *
- * Sizes are driven by the `size` prop so we can use the same component
- * for the navbar (sm) and footer (md) at different scales.
+ * Uses the brand PNG (`public/stratzi-logo.png`) which already includes the
+ * teal "Stratzi.AI" wordmark + brown cursor element on a light cream plate.
+ * Because the plate is baked into the artwork, the logo sits comfortably
+ * on any background — including the new teal navbar — without needing a
+ * separate wrapper.
+ *
+ * The `size` prop just maps to a responsive Tailwind height class; the
+ * width is set to `auto` so the natural 3.28:1 aspect ratio is preserved.
  */
 
 type LogoSize = "sm" | "md" | "lg";
 
-const sizeMap: Record<LogoSize, { text: string; icon: number; gap: string }> = {
-  sm: { text: "text-[20px]", icon: 13, gap: "gap-[3px]" },
-  md: { text: "text-[24px]", icon: 16, gap: "gap-[4px]" },
-  lg: { text: "text-[34px]", icon: 22, gap: "gap-[6px]" },
+const sizeClass: Record<LogoSize, string> = {
+  // Navbar — small on phones (compact), larger on desktop for presence
+  sm: "h-9 md:h-14",
+  // Footer + general — a clearer secondary presence
+  md: "h-12 md:h-16",
+  // Marketing / standalone hero treatments
+  lg: "h-16 md:h-20",
 };
 
 export function Logo({
@@ -27,15 +34,15 @@ export function Logo({
   href?: string | null;
   className?: string;
 }) {
-  const dims = sizeMap[size];
-
   const inner = (
-    <span
-      className={`inline-flex items-end ${dims.gap} font-logo font-semibold leading-none tracking-[-0.01em] text-primary ${dims.text} ${className}`}
-    >
-      <span>Stratzi.AI</span>
-      <CursorGlyph size={dims.icon} />
-    </span>
+    <Image
+      src="/stratzi-logo.png"
+      alt="Stratzi.AI"
+      width={3525}
+      height={1075}
+      priority
+      className={`block w-auto ${sizeClass[size]} ${className}`}
+    />
   );
 
   if (href === null) return inner;
@@ -44,30 +51,5 @@ export function Logo({
     <Link href={href} aria-label="Stratzi.AI — home" className="inline-flex">
       {inner}
     </Link>
-  );
-}
-
-/**
- * The cursor / AI-pointer glyph next to "AI".
- * Stylized like the click cursor on the original logo, but recolored
- * to taupe-brown to fit the Stratzi palette (no light-blue cyan).
- */
-function CursorGlyph({ size }: { size: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="none"
-      aria-hidden
-      className="text-brown-soft -translate-y-[1px]"
-    >
-      {/* Cursor body — solid taupe-brown */}
-      <path
-        d="M5 3 L19 12 L13 13.5 L10 21 L5 3 Z"
-        fill="currentColor"
-      />
-    </svg>
   );
 }

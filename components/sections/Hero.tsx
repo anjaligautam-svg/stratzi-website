@@ -70,21 +70,6 @@ export function Hero() {
             </Link>
           </motion.div>
 
-          {/* Quiet proof strip */}
-          <motion.div
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.36 }}
-            className="mt-10 md:mt-20 flex flex-wrap items-center gap-x-4 gap-y-3 text-[10.5px] font-semibold tracking-[0.18em] uppercase text-ink-subtle"
-          >
-            <span className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-              Live today
-            </span>
-            <span className="text-ink-faint">·</span>
-            <span>My Policy Express</span>
-            <span className="text-ink-faint">·</span>
-            <span>Finonest</span>
-          </motion.div>
         </div>
 
         {/* Right: agent thread */}

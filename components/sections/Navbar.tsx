@@ -4,11 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/Logo";
 
-// IMPORTANT: every internal route here uses Next's <Link>, NOT <a>.
-// Reason — when the site is deployed under a basePath (e.g. GitHub Pages
-// at /stratzi-website), `<Link>` automatically prepends the prefix so the
-// browser navigates to /stratzi-website/solutions. Plain `<a href="/solutions">`
-// goes to the root /solutions → 404.
+// Every internal route here uses Next's <Link>, NOT <a>. With basePath set
+// for GH Pages, <Link> auto-prepends `/stratzi-website` so clicks land on
+// the right URL. Plain <a href="/solutions"> would go to the domain root.
 
 const navLinks = [
   { label: "Solutions", href: "/solutions" },
@@ -17,27 +15,30 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    // Close mobile drawer on viewport resize past the md breakpoint.
+    const onResize = () => {
+      if (window.innerWidth >= 768) setOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   return (
     <header
-      className={[
-        "fixed top-0 inset-x-0 z-50 transition-[background,border,backdrop-filter] duration-300",
-        scrolled
-          ? "bg-bg/80 border-b border-line backdrop-blur-md"
-          : "bg-transparent border-b border-transparent",
-      ].join(" ")}
+      className="fixed top-0 inset-x-0 z-50 border-b border-primary-edge/25 backdrop-blur-md"
+      style={{
+        // Teal primary background with a subtle vertical gradient (lighter
+        // at top, deeper at bottom) + ~92-96% alpha so backdrop-blur reads
+        // as glass over whatever scrolls underneath.
+        background:
+          "linear-gradient(180deg, rgba(44, 102, 110, 0.92) 0%, rgba(31, 81, 89, 0.96) 100%)",
+      }}
     >
-      <div className="section-x mx-auto flex h-16 max-w-[1440px] items-center justify-between md:h-[72px]">
-        {/* Logo */}
+      <div className="section-x mx-auto flex h-16 max-w-[1440px] items-center justify-between md:h-[88px]">
+        {/* Logo — its own light plate sits on the teal bar as a clean badge */}
         <Logo size="sm" />
 
         {/* Desktop nav */}
@@ -46,12 +47,16 @@ export function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-[15px] font-medium text-ink-muted hover:text-primary transition-colors"
+              className="text-[15px] font-medium text-white/85 hover:text-white transition-colors"
             >
               {l.label}
             </Link>
           ))}
-          <Link href="/#cta" className="btn-primary text-[12.5px] px-5 py-2.5">
+          {/* Get-in-touch CTA — white pill on the teal bar for contrast */}
+          <Link
+            href="/#cta"
+            className="inline-flex items-center gap-2 rounded-full bg-white text-primary text-[13px] font-semibold px-6 py-3 hover:bg-primary-soft hover:text-primary transition-colors shadow-[0_4px_14px_-4px_rgba(0,0,0,0.25)]"
+          >
             Get in touch
           </Link>
         </nav>
@@ -61,24 +66,24 @@ export function Navbar() {
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface"
+          className="md:hidden flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/10 backdrop-blur-md"
         >
           <span className="relative block h-3 w-4">
             <span
               className={[
-                "absolute left-0 top-0 h-px w-4 bg-ink transition-transform",
+                "absolute left-0 top-0 h-px w-4 bg-white transition-transform",
                 open ? "translate-y-[6px] rotate-45" : "",
               ].join(" ")}
             />
             <span
               className={[
-                "absolute left-0 top-[6px] h-px w-4 bg-ink transition-opacity",
+                "absolute left-0 top-[6px] h-px w-4 bg-white transition-opacity",
                 open ? "opacity-0" : "opacity-100",
               ].join(" ")}
             />
             <span
               className={[
-                "absolute left-0 top-[12px] h-px w-4 bg-ink transition-transform",
+                "absolute left-0 top-[12px] h-px w-4 bg-white transition-transform",
                 open ? "-translate-y-[6px] -rotate-45" : "",
               ].join(" ")}
             />
@@ -86,17 +91,23 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Mobile drawer — full-width slide-down panel triggered by the
-          hamburger. Tap targets are ≥48px tall so it feels right on touch. */}
+      {/* Mobile drawer — drops out of the teal bar as a continuation of the
+          same color story (slightly darker so it's distinct from the bar). */}
       {open && (
-        <div className="md:hidden border-t border-line bg-bg/95 backdrop-blur-md">
+        <div
+          className="md:hidden border-t border-white/15"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(31, 81, 89, 0.96) 0%, rgba(15, 58, 66, 0.98) 100%)",
+          }}
+        >
           <div className="section-x py-4 flex flex-col">
             {navLinks.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-[17px] font-medium text-ink py-3.5 border-b border-line/60 last:border-b-0 hover:text-primary transition-colors"
+                className="text-[17px] font-medium text-white py-3.5 border-b border-white/15 last:border-b-0 hover:text-primary-soft transition-colors"
               >
                 {l.label}
               </Link>
@@ -104,7 +115,7 @@ export function Navbar() {
             <Link
               href="/#cta"
               onClick={() => setOpen(false)}
-              className="btn-primary w-full justify-center mt-4 py-3.5"
+              className="inline-flex items-center justify-center rounded-full bg-white text-primary text-[14px] font-semibold w-full mt-4 py-3.5 hover:bg-primary-soft transition-colors"
             >
               Get in touch
             </Link>
