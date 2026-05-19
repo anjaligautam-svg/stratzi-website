@@ -28,16 +28,17 @@ export function Navbar() {
 
   return (
     <header
-      className="fixed top-0 inset-x-0 z-50 border-b border-white/15 backdrop-blur-2xl backdrop-saturate-150"
+      className="fixed top-0 inset-x-0 z-50 border-b border-primary-edge/25 backdrop-blur-sm"
       style={{
-        // Teal primary tint with much lower alpha + heavy backdrop-blur
-        // = frosty glass. Page content scrolling underneath blurs through
-        // softly while the teal hue persists for brand identity.
+        // Solid teal with a subtle vertical gradient (lighter top → deeper
+        // bottom) and just a hint of backdrop-blur so content scrolling
+        // underneath gets a whisper of softening without the navbar feeling
+        // transparent.
         background:
-          "linear-gradient(180deg, rgba(44, 102, 110, 0.55) 0%, rgba(31, 81, 89, 0.65) 100%)",
+          "linear-gradient(180deg, rgba(44, 102, 110, 0.95) 0%, rgba(31, 81, 89, 0.97) 100%)",
       }}
     >
-      <div className="section-x mx-auto flex h-[68px] max-w-[1440px] items-center justify-between md:h-[100px]">
+      <div className="section-x mx-auto flex h-16 max-w-[1440px] items-center justify-between md:h-20">
         {/* Logo — its own light plate sits on the teal bar as a clean badge */}
         <Logo size="sm" />
 
@@ -52,10 +53,10 @@ export function Navbar() {
               {l.label}
             </Link>
           ))}
-          {/* Get-in-touch CTA — white pill on the teal bar for contrast */}
+          {/* Get-in-touch CTA — explicit h-10 to match the logo plate */}
           <Link
             href="/#cta"
-            className="inline-flex items-center gap-2 rounded-full bg-white text-primary text-[13px] font-semibold px-6 py-3 hover:bg-primary-soft hover:text-primary transition-colors shadow-[0_4px_14px_-4px_rgba(0,0,0,0.25)]"
+            className="inline-flex items-center gap-2 h-10 rounded-full bg-white text-primary text-[13px] font-semibold px-5 hover:bg-primary-soft hover:text-primary transition-colors shadow-[0_4px_14px_-4px_rgba(0,0,0,0.25)]"
           >
             Get in touch
           </Link>

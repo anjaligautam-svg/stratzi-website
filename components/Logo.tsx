@@ -17,12 +17,13 @@ import Link from "next/link";
 type LogoSize = "sm" | "md" | "lg";
 
 const sizeClass: Record<LogoSize, string> = {
-  // Navbar — needs real presence so the plate reads as a brand mark, not a chip
-  sm: "h-11 md:h-[72px]",
-  // Footer + general
-  md: "h-14 md:h-[88px]",
+  // Navbar — height-matched to the "Get in touch" CTA pill (h-10 = 40px)
+  // so the bar reads as a balanced pair of controls.
+  sm: "h-10",
+  // Footer + general — slightly larger for secondary placement
+  md: "h-12 md:h-14",
   // Marketing / standalone hero treatments
-  lg: "h-20 md:h-24",
+  lg: "h-16 md:h-20",
 };
 
 export function Logo({
