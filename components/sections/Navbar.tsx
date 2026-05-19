@@ -28,16 +28,16 @@ export function Navbar() {
 
   return (
     <header
-      className="fixed top-0 inset-x-0 z-50 border-b border-primary-edge/25 backdrop-blur-md"
+      className="fixed top-0 inset-x-0 z-50 border-b border-white/15 backdrop-blur-2xl backdrop-saturate-150"
       style={{
-        // Teal primary background with a subtle vertical gradient (lighter
-        // at top, deeper at bottom) + ~92-96% alpha so backdrop-blur reads
-        // as glass over whatever scrolls underneath.
+        // Teal primary tint with much lower alpha + heavy backdrop-blur
+        // = frosty glass. Page content scrolling underneath blurs through
+        // softly while the teal hue persists for brand identity.
         background:
-          "linear-gradient(180deg, rgba(44, 102, 110, 0.92) 0%, rgba(31, 81, 89, 0.96) 100%)",
+          "linear-gradient(180deg, rgba(44, 102, 110, 0.55) 0%, rgba(31, 81, 89, 0.65) 100%)",
       }}
     >
-      <div className="section-x mx-auto flex h-16 max-w-[1440px] items-center justify-between md:h-[88px]">
+      <div className="section-x mx-auto flex h-[68px] max-w-[1440px] items-center justify-between md:h-[100px]">
         {/* Logo — its own light plate sits on the teal bar as a clean badge */}
         <Logo size="sm" />
 

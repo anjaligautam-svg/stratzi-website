@@ -17,12 +17,12 @@ import Link from "next/link";
 type LogoSize = "sm" | "md" | "lg";
 
 const sizeClass: Record<LogoSize, string> = {
-  // Navbar — small on phones (compact), larger on desktop for presence
-  sm: "h-9 md:h-14",
-  // Footer + general — a clearer secondary presence
-  md: "h-12 md:h-16",
+  // Navbar — needs real presence so the plate reads as a brand mark, not a chip
+  sm: "h-11 md:h-[72px]",
+  // Footer + general
+  md: "h-14 md:h-[88px]",
   // Marketing / standalone hero treatments
-  lg: "h-16 md:h-20",
+  lg: "h-20 md:h-24",
 };
 
 export function Logo({
