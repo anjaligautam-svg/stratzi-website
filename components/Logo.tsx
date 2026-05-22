@@ -4,26 +4,26 @@ import Link from "next/link";
 /**
  * Stratzi.AI logo.
  *
- * Uses the brand PNG (`public/stratzi-logo.png`) which already includes the
- * teal "Stratzi.AI" wordmark + brown cursor element on a light cream plate.
- * Because the plate is baked into the artwork, the logo sits comfortably
- * on any background — including the new teal navbar — without needing a
- * separate wrapper.
+ * Uses the brand PNG (`public/stratzi-logo.png`) — the teal "Stratzi.AI"
+ * wordmark with a bronze cursor accent on a TRANSPARENT background. Because
+ * it's transparent, the teal wordmark sits directly on whatever surface it's
+ * placed on (the light glass navbar, the footer, etc.).
  *
- * The `size` prop just maps to a responsive Tailwind height class; the
- * width is set to `auto` so the natural 3.28:1 aspect ratio is preserved.
+ * Intrinsic artwork size: 2097 × 478 → aspect ratio ≈ 4.39:1.
+ * The `size` prop maps to a responsive Tailwind height class; width is
+ * `auto` so that 4.39:1 ratio is always preserved (never distorted).
  */
 
 type LogoSize = "sm" | "md" | "lg";
 
 const sizeClass: Record<LogoSize, string> = {
-  // Navbar — height-matched to the "Get in touch" CTA pill (h-10 = 40px)
-  // so the bar reads as a balanced pair of controls.
-  sm: "h-10",
-  // Footer + general — slightly larger for secondary placement
-  md: "h-12 md:h-14",
+  // Navbar — 36px tall (≈158px wide at the 4.39:1 ratio). Width is auto so
+  // the aspect ratio is never distorted.
+  sm: "h-9",
+  // Footer + general — clear secondary presence
+  md: "h-10 md:h-12",
   // Marketing / standalone hero treatments
-  lg: "h-16 md:h-20",
+  lg: "h-14 md:h-[68px]",
 };
 
 export function Logo({
@@ -39,8 +39,8 @@ export function Logo({
     <Image
       src="/stratzi-logo.png"
       alt="Stratzi.AI"
-      width={3525}
-      height={1075}
+      width={2097}
+      height={478}
       priority
       className={`block w-auto ${sizeClass[size]} ${className}`}
     />
