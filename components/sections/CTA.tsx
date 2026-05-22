@@ -48,17 +48,6 @@ export function CTA() {
               stack. No obligation.
             </p>
           </Reveal>
-
-          <Reveal delay={0.24}>
-            <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 text-[12px] text-white/70">
-              <span className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary-soft" />
-                We respond within 24 hours
-              </span>
-              <span className="text-white/30 hidden sm:inline">·</span>
-              <span>No sales pressure</span>
-            </div>
-          </Reveal>
         </div>
 
         {/* Right: form — frosted dark-mode card so it reads cleanly over the

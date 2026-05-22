@@ -28,18 +28,17 @@ export function Navbar() {
 
   return (
     <header
-      className="fixed top-0 inset-x-0 z-50 border-b border-primary-edge/25 backdrop-blur-sm"
+      className="fixed top-0 inset-x-0 z-50 border-b border-line/70 backdrop-blur-xl backdrop-saturate-150"
       style={{
-        // Solid teal with a subtle vertical gradient (lighter top → deeper
-        // bottom) and just a hint of backdrop-blur so content scrolling
-        // underneath gets a whisper of softening without the navbar feeling
-        // transparent.
+        // Light "frosted glass" bar — tinted with the page background
+        // (#F8FAF9) at ~80-90% alpha so heavy backdrop-blur reads as premium
+        // glass while keeping a faint vertical gradient for depth.
         background:
-          "linear-gradient(180deg, rgba(44, 102, 110, 0.95) 0%, rgba(31, 81, 89, 0.97) 100%)",
+          "linear-gradient(180deg, rgba(248, 250, 249, 0.80) 0%, rgba(248, 250, 249, 0.92) 100%)",
       }}
     >
       <div className="section-x mx-auto flex h-16 max-w-[1440px] items-center justify-between md:h-20">
-        {/* Logo — its own light plate sits on the teal bar as a clean badge */}
+        {/* Logo */}
         <Logo size="sm" />
 
         {/* Desktop nav */}
@@ -48,15 +47,15 @@ export function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-[15px] font-medium text-white/85 hover:text-white transition-colors"
+              className="text-[15px] font-medium text-ink-muted hover:text-primary transition-colors"
             >
               {l.label}
             </Link>
           ))}
-          {/* Get-in-touch CTA — explicit h-10 to match the logo plate */}
+          {/* Get-in-touch CTA — teal pill for contrast on the light glass bar */}
           <Link
             href="/#cta"
-            className="inline-flex items-center gap-2 h-10 rounded-full bg-white text-primary text-[13px] font-semibold px-5 hover:bg-primary-soft hover:text-primary transition-colors shadow-[0_4px_14px_-4px_rgba(0,0,0,0.25)]"
+            className="inline-flex items-center gap-2 h-10 rounded-full bg-primary text-white text-[13px] font-semibold px-5 hover:bg-primary-hover transition-colors shadow-[0_4px_14px_-6px_rgba(44,102,110,0.45)]"
           >
             Get in touch
           </Link>
@@ -67,24 +66,24 @@ export function Navbar() {
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/10 backdrop-blur-md"
+          className="md:hidden flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface"
         >
           <span className="relative block h-3 w-4">
             <span
               className={[
-                "absolute left-0 top-0 h-px w-4 bg-white transition-transform",
+                "absolute left-0 top-0 h-px w-4 bg-ink transition-transform",
                 open ? "translate-y-[6px] rotate-45" : "",
               ].join(" ")}
             />
             <span
               className={[
-                "absolute left-0 top-[6px] h-px w-4 bg-white transition-opacity",
+                "absolute left-0 top-[6px] h-px w-4 bg-ink transition-opacity",
                 open ? "opacity-0" : "opacity-100",
               ].join(" ")}
             />
             <span
               className={[
-                "absolute left-0 top-[12px] h-px w-4 bg-white transition-transform",
+                "absolute left-0 top-[12px] h-px w-4 bg-ink transition-transform",
                 open ? "-translate-y-[6px] -rotate-45" : "",
               ].join(" ")}
             />
@@ -92,14 +91,13 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Mobile drawer — drops out of the teal bar as a continuation of the
-          same color story (slightly darker so it's distinct from the bar). */}
+      {/* Mobile drawer — light frosted continuation of the bar. */}
       {open && (
         <div
-          className="md:hidden border-t border-white/15"
+          className="md:hidden border-t border-line"
           style={{
             background:
-              "linear-gradient(180deg, rgba(31, 81, 89, 0.96) 0%, rgba(15, 58, 66, 0.98) 100%)",
+              "linear-gradient(180deg, rgba(248, 250, 249, 0.97) 0%, rgba(241, 236, 228, 0.98) 100%)",
           }}
         >
           <div className="section-x py-4 flex flex-col">
@@ -108,7 +106,7 @@ export function Navbar() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-[17px] font-medium text-white py-3.5 border-b border-white/15 last:border-b-0 hover:text-primary-soft transition-colors"
+                className="text-[17px] font-medium text-ink py-3.5 border-b border-line last:border-b-0 hover:text-primary transition-colors"
               >
                 {l.label}
               </Link>
@@ -116,7 +114,7 @@ export function Navbar() {
             <Link
               href="/#cta"
               onClick={() => setOpen(false)}
-              className="inline-flex items-center justify-center rounded-full bg-white text-primary text-[14px] font-semibold w-full mt-4 py-3.5 hover:bg-primary-soft transition-colors"
+              className="inline-flex items-center justify-center rounded-full bg-primary text-white text-[14px] font-semibold w-full mt-4 py-3.5 hover:bg-primary-hover transition-colors"
             >
               Get in touch
             </Link>
