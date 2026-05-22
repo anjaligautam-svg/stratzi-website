@@ -17,9 +17,9 @@ import Link from "next/link";
 type LogoSize = "sm" | "md" | "lg";
 
 const sizeClass: Record<LogoSize, string> = {
-  // Navbar — 36px tall (≈158px wide at the 4.39:1 ratio). Width is auto so
-  // the aspect ratio is never distorted.
-  sm: "h-9",
+  // Navbar — 28px tall on mobile (≈123px wide), 36px on desktop (≈158px wide).
+  // Width is auto so the 4.39:1 aspect ratio is never distorted.
+  sm: "h-7 md:h-9",
   // Footer + general — clear secondary presence
   md: "h-10 md:h-12",
   // Marketing / standalone hero treatments
