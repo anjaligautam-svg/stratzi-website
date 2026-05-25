@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal, Stagger, StaggerItem } from "../motion/Reveal";
+import { TiltCard } from "@/components/ui/tilt-card";
 
 /**
  * WhoWeWorkWith — sectors where Stratzi is live in production.
@@ -61,17 +62,25 @@ export function WhoWeWorkWith() {
         >
           {sectors.map((s) => (
             <StaggerItem key={s.name} className="h-full">
-              <article className="h-full rounded-2xl border border-primary-edge/35 bg-surface p-7 md:p-9 transition-colors hover:border-primary-edge">
-                <div className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-primary">
-                  Live sector
-                </div>
-                <h3 className="mt-3 font-heading text-[22px] md:text-[26px] font-semibold leading-tight tracking-[-0.005em] text-ink">
-                  {s.name}
-                </h3>
-                <p className="mt-3 text-[14.5px] leading-relaxed text-ink">
-                  {s.detail}
-                </p>
-              </article>
+              <TiltCard
+                tiltLimit={7}
+                scale={1.02}
+                effect="evade"
+                spotlightColor="rgba(176, 238, 237, 0.18)"
+                className="h-full rounded-2xl"
+              >
+                <article className="h-full rounded-2xl border border-primary-edge/45 bg-surface p-7 md:p-9">
+                  <div className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-primary">
+                    Live sector
+                  </div>
+                  <h3 className="mt-3 font-heading text-[22px] md:text-[26px] font-semibold leading-tight tracking-[-0.005em] text-ink">
+                    {s.name}
+                  </h3>
+                  <p className="mt-3 text-[14.5px] leading-relaxed text-ink">
+                    {s.detail}
+                  </p>
+                </article>
+              </TiltCard>
             </StaggerItem>
           ))}
         </Stagger>

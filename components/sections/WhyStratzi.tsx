@@ -1,6 +1,8 @@
 "use client";
 
 import { Reveal, Stagger, StaggerItem } from "../motion/Reveal";
+import { BGPattern } from "@/components/ui/bg-pattern";
+import { AnimatedBorderCard } from "@/components/ui/animated-border-card";
 
 /**
  * WhyStratzi — three differentiators + a small stat block.
@@ -48,6 +50,16 @@ export function WhyStratzi() {
           "linear-gradient(180deg, #0f3a42 0%, #0a2a30 55%, #061d22 100%)",
       }}
     >
+      {/* Same dot pattern overlay as How It Works — keeps the dark sections
+          visually related as one "engine" zone. Light-teal tinted, low
+          alpha, fade-edges mask. */}
+      <BGPattern
+        variant="dots"
+        mask="fade-edges"
+        size={26}
+        fill="rgba(176, 238, 237, 0.16)"
+      />
+
       <div className="relative z-10 mx-auto max-w-[1440px]">
         <div className="max-w-3xl">
           <Reveal>
@@ -67,19 +79,27 @@ export function WhyStratzi() {
           className="mt-10 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6"
           staggerChildren={0.1}
         >
-          {reasons.map((r) => (
+          {reasons.map((r, i) => (
             <StaggerItem key={r.number} className="h-full">
-              <article className="h-full rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-xl p-7 md:p-9">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-soft/45 bg-primary-soft/15 font-heading text-[13px] font-semibold text-primary-soft">
-                    {r.number}
-                  </span>
-                </div>
-                <h3 className="headline-md mt-5 text-white">{r.title}</h3>
-                <p className="mt-3 text-[14.5px] leading-relaxed text-white/80">
-                  {r.body}
-                </p>
-              </article>
+              {/* AnimatedBorderCard adds the traveling light beams + corner
+                  glow spots around each card. staggerDelay shifts each
+                  card's pulse so they don't fire in unison. */}
+              <AnimatedBorderCard
+                staggerDelay={i * 0.4}
+                className="h-full"
+              >
+                <article className="h-full rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-xl p-7 md:p-9">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-soft/45 bg-primary-soft/15 font-heading text-[13px] font-semibold text-primary-soft">
+                      {r.number}
+                    </span>
+                  </div>
+                  <h3 className="headline-md mt-5 text-white">{r.title}</h3>
+                  <p className="mt-3 text-[14.5px] leading-relaxed text-white/80">
+                    {r.body}
+                  </p>
+                </article>
+              </AnimatedBorderCard>
             </StaggerItem>
           ))}
         </Stagger>

@@ -76,11 +76,6 @@ export function Hero() {
             transition={{ ...fadeUp.transition, delay: 0.32 }}
             className="mt-10 md:mt-12 flex flex-wrap items-center gap-x-4 md:gap-x-6 gap-y-2 text-[10.5px] md:text-[11px] font-semibold tracking-[0.16em] uppercase text-ink-subtle"
           >
-            <span className="flex items-center gap-2 text-primary">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-              Live today
-            </span>
-            <span className="text-ink-faint">·</span>
             <span>Insurance broking</span>
             <span className="text-ink-faint">·</span>
             <span>Financial services</span>
