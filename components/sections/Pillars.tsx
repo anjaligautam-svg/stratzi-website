@@ -18,45 +18,45 @@ const pillars: Pillar[] = [
     label: "Component 01",
     name: "Company Brain",
     description:
-      "Your institutional memory — captured, structured, and queryable. Built from every email, document, meeting, and decision your business produces. It grows smarter as you operate. It never retires.",
+      "Everything your business knows — made accessible. Built from how your team actually works, it becomes the single source of truth that never walks out the door.",
     bullets: [
-      "Ingests all channels — email, voice, docs, portals",
-      "Long-term, working, and procedural memory",
-      "Queryable in natural language by anyone",
-      "The foundation every agent draws from",
+      "Captures knowledge as your team operates",
+      "Answers questions your team used to ask each other",
+      "Gets more useful the longer it runs",
+      "The foundation everything else builds on",
     ],
     example:
-      "A transaction confirmation lands in the manager's inbox. The agent detects it, updates memory, and reflects it in analytics — automatically.",
+      "A new team member asks about a client's history. They get a complete answer in seconds — no digging through emails, no asking around.",
   },
   {
     numeral: "II",
     label: "Component 02",
-    name: "Agentic Employees",
+    name: "AI Employee Buddies",
     description:
-      "Custom AI agents that own entire workflows — not single tasks. They navigate portals, communicate with clients, process documents, and hand off to humans only when a decision genuinely requires one.",
+      "Dedicated AI colleagues that handle the repetitive, time-consuming work your team currently does by hand — so your people can focus on what actually needs them.",
     bullets: [
-      "Process agents — execute end-to-end",
-      "Comms agents — call, WhatsApp, email",
-      "Compliance agents — reports, filings, audits",
-      "Intelligence agents — surface what matters",
+      "Own tasks end-to-end, not just single steps",
+      "Work across communication, documents, and portals",
+      "Hand off to humans only when it matters",
+      "Available around the clock, without follow-up",
     ],
     example:
-      "Upload a lead list. The voice agent calls on your behalf, runs the script, books follow-ups, and updates the sheet — overnight.",
+      "A routine client request comes in after hours. It's handled, logged, and responded to before your team arrives in the morning.",
   },
   {
     numeral: "III",
     label: "Component 03",
     name: "Learning Loops",
     description:
-      "Every agent action generates a signal. Signals flow back into the brain. Playbooks refine. Decisions sharpen. The OS at month 12 is a fundamentally more capable system than month 1 — without a single manual update.",
+      "The system pays attention to what works and what doesn't — and adjusts. Six months in, it runs your business noticeably better than it did on day one.",
     bullets: [
-      "Outcome signal capture after every action",
-      "Automatic playbook refinement",
-      "Agent performance tracking and tuning",
-      "Compounding intelligence over time",
+      "Learns from every interaction and outcome",
+      "Adapts when your business or market changes",
+      "Reduces exceptions over time, not more",
+      "No manual updates or IT involvement needed",
     ],
     example:
-      "A provider changes a business rule overnight. The agent detects it and updates payment & payout logic — no IT ticket required.",
+      "Your team stops correcting the same type of error after week three. The system noticed the pattern first.",
   },
 ];
 
@@ -67,22 +67,20 @@ export function Pillars() {
         {/* Header — centered */}
         <div className="max-w-3xl mx-auto text-center">
           <Reveal>
-            <div className="eyebrow">What Stratzi builds</div>
+            <div className="eyebrow">What we deliver</div>
           </Reveal>
           <Reveal delay={0.08}>
             <h2 className="headline-lg mt-5">
-              Three components.{" "}
+              Less time on operations.{" "}
               <span className="text-primary italic font-medium">
-                One operating system.
+                More time on growth.
               </span>
             </h2>
           </Reveal>
           <Reveal delay={0.16}>
             <p className="mt-5 mx-auto max-w-2xl text-[16.5px] leading-relaxed text-ink-muted">
-              Not a chatbot. Not a workflow tool. Not a one-time automation
-              project. A full AI operations layer — architected to your
-              business, built on the SaaS you already run, compounding in value
-              from day one.
+              We build and run the automation layer for your business — and the
+              more it runs, the better it gets.
             </p>
           </Reveal>
         </div>

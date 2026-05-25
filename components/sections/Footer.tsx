@@ -6,7 +6,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1440px] flex flex-col md:flex-row md:items-center md:justify-between gap-5">
         <Logo size="md" />
         <div className="text-[11px] tracking-[0.12em] uppercase text-ink-subtle">
-          The Business OS for MSMEs · India · 2026
+          Stratzi AI Solutions · India · 2026
         </div>
         <a
           href="mailto:hello@stratzi.ai"

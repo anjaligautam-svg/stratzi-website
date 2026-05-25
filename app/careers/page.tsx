@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
-import { CareersForm } from "@/components/CareersForm";
 import { WebGLShader } from "@/components/ui/web-gl-shader";
 import { TiltCard } from "@/components/ui/tilt-card";
 import { SpecialText } from "@/components/ui/special-text";
@@ -16,6 +15,7 @@ export const metadata: Metadata = {
 type Role = {
   number: string;
   title: string;
+  meta: string;
   blurb: string;
   expectations: string[];
 };
@@ -23,36 +23,38 @@ type Role = {
 const roles: Role[] = [
   {
     number: "01",
-    title: "App Developer (React Native / Flutter)",
+    title: "AI Engineer",
+    meta: "2–5 years · Pune hybrid",
     blurb:
-      "Build performant, user-friendly mobile applications from the ground up — both for our internal products and client-facing tools.",
+      "Own the core AI infrastructure layer — memory, retrieval, and learning systems.",
     expectations: [
-      "Solid experience with React Native or Flutter",
-      "Ability to build & ship across iOS and Android",
-      "A product mindset — clean UX and fast iteration",
+      "Production RAG / agent experience required",
+      "LangChain / LangGraph",
+      "Strong Python",
     ],
   },
   {
     number: "02",
-    title: "Front-end Developer (Web + App)",
+    title: "Database Administrator",
+    meta: "2–5 years",
     blurb:
-      "If you live and breathe interfaces, this one's for you. Build smooth, responsive UIs that work across web and mobile, helping us bring our designs and ideas to life.",
+      "Keep the data layer healthy, fast, and reliable across live client operations.",
     expectations: [
-      "Strong experience with React, Next.js, or similar frameworks",
-      "Bonus if you've dabbled in both web and mobile",
-      "A sharp eye for design and UX",
-      "Experience collaborating with backend and product teams",
+      "PostgreSQL + Redis",
+      "Query optimisation",
+      "GCP / AWS",
     ],
   },
   {
     number: "03",
-    title: "DevOps Engineer",
+    title: "Full-stack Developer",
+    meta: "1–3 years",
     blurb:
-      "Be the glue between code and cloud. Help us automate everything, keep systems reliable, and scale our infrastructure with confidence.",
+      "Build client-facing interfaces and backend services.",
     expectations: [
-      "Own CI/CD pipelines and deployment workflows",
-      "Manage infrastructure (AWS / GCP / Azure)",
-      "Champion security, monitoring, and performance best practices",
+      "React / Next.js frontend",
+      "Python or Node.js backend",
+      "REST APIs and third-party integrations",
     ],
   },
 ];
@@ -87,7 +89,7 @@ export default function CareersPage() {
                       always above the fold) — framer-motion's `useInView`
                       proved unreliable with App Router hydration. */}
                   <SpecialText delay={0.4} speed={28}>
-                    Be part of
+                    Build things that
                   </SpecialText>
                   {" "}
                   <SpecialText
@@ -95,16 +97,16 @@ export default function CareersPage() {
                     speed={28}
                     className="text-primary italic font-medium"
                   >
-                    our mission.
+                    actually run businesses.
                   </SpecialText>
                 </h1>
               </Reveal>
               <Reveal delay={0.16}>
                 <p className="mt-7 mx-auto max-w-2xl text-[17px] md:text-[18px] leading-relaxed text-ink-muted">
-                  At Stratzi, we're not just building AI-powered products,
-                  we're rethinking how software gets built and delivered.
-                  From smart apps to scalable services, we focus on solving
-                  real-world problems with modern, intelligent tech.
+                  At Stratzi, we&apos;re putting AI to work inside real Indian
+                  businesses — not in demos, not in pilots. If you want to
+                  build systems that handle genuine operations for genuine
+                  clients, this is where that happens.
                 </p>
               </Reveal>
             </div>
@@ -193,7 +195,9 @@ export default function CareersPage() {
             {/* Left: copy */}
             <div>
               <Reveal>
-                <div className="eyebrow eyebrow-on-dark">How to apply</div>
+                <div className="eyebrow eyebrow-on-dark">
+                  Careers · How to apply
+                </div>
               </Reveal>
               <Reveal delay={0.08}>
                 <h2 className="headline-lg mt-5 text-white">
@@ -210,15 +214,51 @@ export default function CareersPage() {
               <Reveal delay={0.16}>
                 <p className="mt-5 max-w-lg text-[16px] leading-relaxed text-white/80">
                   Send your CV, GitHub, portfolio, or a short note about
-                  something you've built or loved working on. Or fill in the
-                  form on the right.
+                  something you&apos;ve built or loved working on.
                 </p>
               </Reveal>
             </div>
 
-            {/* Right: application form (CareersForm uses dark-mode styling) */}
+            {/* Right: single "Apply now" CTA card (replaces the prior
+                expanded form). Frosted-glass card with a centered pill
+                button — visually anchors the right column without
+                competing with the copy on the left. */}
             <Reveal delay={0.16}>
-              <CareersForm />
+              <div className="relative rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-xl p-8 md:p-12 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)] flex flex-col items-center text-center">
+                <div className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-primary-soft">
+                  Open to applications
+                </div>
+                <p className="mt-3 max-w-sm font-heading text-[22px] md:text-[26px] font-semibold leading-snug text-white tracking-[-0.005em]">
+                  One email. We reply within a few days.
+                </p>
+                <p className="mt-3 max-w-sm text-[13.5px] leading-relaxed text-white/70">
+                  Attach your CV and anything you&apos;d like us to see.
+                  Skip the form, skip the cover letter — just tell us why
+                  this role, in your own words.
+                </p>
+                <a
+                  href="mailto:hiring@stratzi.ai?subject=Application%20%E2%80%94%20Stratzi"
+                  className="btn-primary mt-7 text-[14px] px-7 py-4"
+                >
+                  Apply now
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </a>
+                <div className="mt-5 text-[11px] text-white/55">
+                  hiring@stratzi.ai
+                </div>
+              </div>
             </Reveal>
           </div>
         </section>
@@ -246,6 +286,11 @@ function RoleCard({ role }: { role: Role }) {
       </div>
 
       <h3 className="headline-md relative mt-5">{role.title}</h3>
+
+      {/* Meta line — experience + location, sits right under the title */}
+      <div className="relative mt-2 text-[12px] font-medium text-primary tracking-wide">
+        {role.meta}
+      </div>
 
       <p className="relative mt-3 text-[14.5px] leading-relaxed text-ink">
         {role.blurb}

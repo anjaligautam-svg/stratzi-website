@@ -13,31 +13,31 @@ type Phase = {
 const phases: Phase[] = [
   {
     number: "01",
-    title: "We map your operations",
-    body: "Every workflow your team currently runs by hand. Every SaaS tool in your stack. Every document, email, and portal that touches your business. We identify what agents can own — and what always needs a human.",
+    title: "We understand your business",
+    body: "We spend time with your team mapping how work actually flows — what's slow, what's manual, what breaks, and where the real bottlenecks are. No assumptions, no templates.",
     deliverable:
-      "A precise automation blueprint — what to build, in what order, and what the full OS looks like deployed on your stack.",
+      "A clear picture of what can be automated and what the impact will be — before we build anything.",
   },
   {
     number: "02",
-    title: "We build your company brain",
-    body: "Your institutional knowledge — structured and made queryable. Client histories, product rules, operational playbooks, past decisions. The brain does not resign when your ops lead does. It does not forget.",
+    title: "We set up your AI foundation",
+    body: "We build the intelligence layer on top of your existing tools — capturing how your business works, what your clients need, and the rules your team runs by. It learns as it goes.",
     deliverable:
-      "A living knowledge base that every agent draws from — and that becomes more valuable every month your business operates.",
+      "A system that knows your business — and gets harder to replace the longer it runs.",
   },
   {
     number: "03",
-    title: "We deploy your agentic employees",
-    body: "Custom-built agents for your specific workflows. They navigate portals, communicate with clients, run compliance processes, and execute multi-step tasks end-to-end. Humans receive exceptions. Agents handle everything else.",
+    title: "Your AI team goes to work",
+    body: "We deploy AI colleagues built around your specific workflows. They handle the routine work end-to-end and bring your team in only when a real decision is needed.",
     deliverable:
-      "An operations layer running 24/7. Your team moves from executing to approving — from doing to deciding.",
+      "Your team focused on clients and decisions — not paperwork and follow-ups.",
   },
   {
     number: "04",
-    title: "The OS learns. The business compounds.",
-    body: "Every agent action generates a signal. The brain updates. Playbooks sharpen. What runs at year-end is a more capable system than what was deployed on day one — automatically, continuously, without IT projects.",
+    title: "It compounds over time",
+    body: "Every task completed, every correction made, every outcome recorded makes the system more capable. What you have at the end of year one is fundamentally better than what you started with.",
     deliverable:
-      "An intelligence asset that appreciates over time. Not a static tool — a system that gets better as you use it.",
+      "An asset that appreciates — not a tool that depreciates.",
   },
 ];
 
@@ -72,15 +72,15 @@ export function HowItWorks() {
           </Reveal>
           <Reveal delay={0.08}>
             <h2 className="headline-lg mt-5 text-white">
-              Four phases.{" "}
+              Simple to start.{" "}
               <span className="text-primary-soft italic font-medium">
-                One transformation.
+                Built to last.
               </span>
             </h2>
           </Reveal>
           <Reveal delay={0.16}>
             <p className="mt-5 max-w-2xl text-[16.5px] leading-relaxed text-white/80">
-              Every Stratzi deployment is scoped to your exact business — your
+              Every Stratzi engagement is scoped to your exact business — your
               workflows, your tools, your team's actual work. Not a generic
               template applied and abandoned.
             </p>
@@ -128,10 +128,10 @@ function PhaseRow({ phase }: { phase: Phase }) {
         </p>
       </div>
 
-      {/* Deliverable */}
+      {/* "You get" callout */}
       <div className="col-span-12 md:col-span-4 mt-3 md:mt-0">
         <div className="text-[10.5px] font-semibold tracking-[0.18em] uppercase text-primary-soft">
-          Deliverable
+          You get
         </div>
         <p className="mt-2.5 text-[14px] leading-relaxed text-white">
           {phase.deliverable}

@@ -35,7 +35,7 @@ export function CTA() {
           </Reveal>
           <Reveal delay={0.08}>
             <h2 className="headline-lg mt-5 text-white">
-              See what the Business OS looks like for{" "}
+              See what this looks like for{" "}
               <span className="text-primary-soft italic font-medium">
                 your business.
               </span>
@@ -43,15 +43,16 @@ export function CTA() {
           </Reveal>
           <Reveal delay={0.16}>
             <p className="mt-5 max-w-lg text-[16px] leading-relaxed text-white/80">
-              30 minutes. We map your operations, identify what agents can own,
-              and show you exactly what the Stratzi OS would look like on your
-              stack. No obligation.
+              30 minutes. We&apos;ll walk through what your operations look
+              like today and show you exactly where automation makes sense.
+              No obligation.
             </p>
           </Reveal>
         </div>
 
         {/* Right: form — frosted dark-mode card so it reads cleanly over the
-            gradient + emerging waves below. */}
+            gradient + emerging waves below. Field labels + button text
+            updated per the latest content doc. */}
         <Reveal delay={0.16}>
           <form
             onSubmit={(e) => e.preventDefault()}
@@ -71,9 +72,9 @@ export function CTA() {
               className="mt-4"
             />
             <Field
-              label="What do you want to automate? (optional)"
+              label="Any specific requirements in mind? (optional)"
               type="text"
-              placeholder="Brief description"
+              placeholder="Share anything you'd like us to know"
               className="mt-4"
             />
 
@@ -81,7 +82,7 @@ export function CTA() {
               type="submit"
               className="btn-primary mt-7 w-full justify-center text-[13px] py-4"
             >
-              Book a discovery call
+              Book a conversation
               <svg
                 width="14"
                 height="14"
