@@ -117,7 +117,7 @@ Composed in `app/page.tsx` from section components in `components/sections/`.
 
 ### – Footer
 
-- Single row: Logo (left) · "The Business OS for MSMEs · India · 2026" (center) · `hello@stratzi.ai` (right)
+- Single row: Logo (left) · "Stratzi AI Solutions · India · 2026" (center) · `hiring@stratzi.ai` (right)
 - Top border, generous vertical padding, no other clutter
 - Skip mega-footer with sitemap — out of scope
 

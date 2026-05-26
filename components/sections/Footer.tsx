@@ -9,10 +9,10 @@ export function Footer() {
           Stratzi AI Solutions · India · 2026
         </div>
         <a
-          href="mailto:hello@stratzi.ai"
+          href="mailto:hiring@stratzi.ai"
           className="text-[13px] font-medium text-ink hover:text-primary transition-colors"
         >
-          hello@stratzi.ai
+          hiring@stratzi.ai
         </a>
       </div>
     </footer>
