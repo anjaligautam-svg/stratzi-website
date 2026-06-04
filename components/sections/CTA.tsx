@@ -5,18 +5,86 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Reveal } from "../motion/Reveal";
 import { WebGLShader } from "@/components/ui/web-gl-shader";
 
+/**
+ * CTA — "Get in touch" section.
+ *
+ * Form has client-side validation:
+ *  - Name, Company, Email are all required.
+ *  - Email must look like an email (simple regex — server should re-validate).
+ *  - On submit: if anything's wrong, errors show inline beneath each field
+ *    and submission is blocked. Once everything's valid, the form swaps to
+ *    the success state via AnimatePresence.
+ *  - Typing into a field with an error clears just that field's error so
+ *    the user gets immediate feedback that they fixed it.
+ *
+ * The actual email-send is still mocked. Wire to a real handler (Formspree,
+ * Resend, /api route, etc.) before launch — same TODO marker.
+ */
+
+type FormValues = {
+  name: string;
+  company: string;
+  email: string;
+  requirements: string;
+};
+
+type FormErrors = Partial<Record<keyof FormValues, string>>;
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const EMPTY_VALUES: FormValues = {
+  name: "",
+  company: "",
+  email: "",
+  requirements: "",
+};
+
+function validate(values: FormValues): FormErrors {
+  const errors: FormErrors = {};
+  if (!values.name.trim()) errors.name = "Please enter your name";
+  if (!values.company.trim()) errors.company = "Please enter your company";
+  if (!values.email.trim()) {
+    errors.email = "Please enter your email";
+  } else if (!EMAIL_RE.test(values.email.trim())) {
+    errors.email = "Please enter a valid email address";
+  }
+  return errors;
+}
+
 export function CTA() {
-  // Submission flow:
-  //  - On submit we set `submitted = true` and swap the form for a success
-  //    card. Currently the actual email-send is a stub — wire to a real
-  //    handler (Formspree, Resend, /api route, etc.) before launch.
-  //  - "Send another" resets state so the form reappears.
   const [submitted, setSubmitted] = useState(false);
+  const [values, setValues] = useState<FormValues>(EMPTY_VALUES);
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  const updateField = (key: keyof FormValues, value: string) => {
+    setValues((v) => ({ ...v, [key]: value }));
+    // Clear THIS field's error as the user starts fixing it. Other fields'
+    // errors stay so the user can see everything they still need to address.
+    if (errors[key]) {
+      setErrors((e) => {
+        const next = { ...e };
+        delete next[key];
+        return next;
+      });
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: send form data to hiring@stratzi.ai via backend handler.
+    const nextErrors = validate(values);
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
+    setErrors({});
+    // TODO: send `values` to hiring@stratzi.ai via backend handler.
     setSubmitted(true);
+  };
+
+  const handleReset = () => {
+    setSubmitted(false);
+    setValues(EMPTY_VALUES);
+    setErrors({});
   };
 
   return (
@@ -59,38 +127,60 @@ export function CTA() {
           </Reveal>
         </div>
 
-        {/* Right: form ↔ success state swap. AnimatePresence handles the
-            crossfade so the layout never jumps. Both states share the same
-            frosted-glass shell so the section feels visually stable. */}
+        {/* Right: form ↔ success state swap. */}
         <Reveal delay={0.16}>
           <AnimatePresence mode="wait" initial={false}>
             {!submitted ? (
               <motion.form
                 key="form"
                 onSubmit={handleSubmit}
+                noValidate
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8, transition: { duration: 0.25 } }}
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 className="rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-xl p-6 md:p-9 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)]"
               >
-                <Field label="Your name" type="text" placeholder="Full name" />
                 <Field
+                  id="cta-name"
+                  label="Your name"
+                  type="text"
+                  placeholder="Full name"
+                  value={values.name}
+                  onChange={(v) => updateField("name", v)}
+                  error={errors.name}
+                  autoComplete="name"
+                />
+                <Field
+                  id="cta-company"
                   label="Company"
                   type="text"
                   placeholder="Company name"
+                  value={values.company}
+                  onChange={(v) => updateField("company", v)}
+                  error={errors.company}
+                  autoComplete="organization"
                   className="mt-4"
                 />
                 <Field
+                  id="cta-email"
                   label="Email"
                   type="email"
                   placeholder="work@company.com"
+                  value={values.email}
+                  onChange={(v) => updateField("email", v)}
+                  error={errors.email}
+                  autoComplete="email"
+                  inputMode="email"
                   className="mt-4"
                 />
                 <Field
+                  id="cta-requirements"
                   label="Any specific requirements in mind? (optional)"
                   type="text"
                   placeholder="Share anything you'd like us to know"
+                  value={values.requirements}
+                  onChange={(v) => updateField("requirements", v)}
                   className="mt-4"
                 />
 
@@ -115,7 +205,7 @@ export function CTA() {
                 </button>
               </motion.form>
             ) : (
-              <SuccessCard key="success" onReset={() => setSubmitted(false)} />
+              <SuccessCard key="success" onReset={handleReset} />
             )}
           </AnimatePresence>
         </Reveal>
@@ -126,9 +216,6 @@ export function CTA() {
 
 /**
  * SuccessCard — confirmation state shown after the form is submitted.
- * Designed to feel like a calm, premium acknowledgement: ambient teal glow,
- * animated checkmark, headline, body, and a quiet "Send another" reset
- * link in case the user wants to submit again.
  */
 function SuccessCard({ onReset }: { onReset: () => void }) {
   return (
@@ -139,7 +226,6 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
       className="relative rounded-2xl border border-primary-soft/35 bg-white/[0.04] backdrop-blur-xl p-8 md:p-12 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)] flex flex-col items-center text-center overflow-hidden"
     >
-      {/* Ambient teal halo behind the checkmark */}
       <motion.div
         aria-hidden
         className="absolute -top-16 left-1/2 -translate-x-1/2 h-48 w-48 rounded-full bg-primary-soft/20 blur-3xl pointer-events-none"
@@ -147,7 +233,6 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Animated check badge */}
       <motion.div
         initial={{ scale: 0.4, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -159,7 +244,6 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
         }}
         className="relative h-16 w-16 rounded-full bg-primary-soft/20 border border-primary-soft/45 flex items-center justify-center"
       >
-        {/* Pulsing outer ring */}
         <motion.div
           aria-hidden
           className="absolute inset-0 rounded-full border border-primary-soft/40"
@@ -178,7 +262,6 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
           strokeLinejoin="round"
           className="text-primary-soft relative"
         >
-          {/* Animated stroke draw — feels intentional, not just instant */}
           <motion.polyline
             points="20 6 9 17 4 12"
             initial={{ pathLength: 0, opacity: 0 }}
@@ -191,7 +274,6 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
         </motion.svg>
       </motion.div>
 
-      {/* Status pill */}
       <motion.div
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
@@ -205,7 +287,6 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
         Request received
       </motion.div>
 
-      {/* Headline */}
       <motion.h3
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
@@ -215,7 +296,6 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
         We&apos;ve got your request.
       </motion.h3>
 
-      {/* Body */}
       <motion.p
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
@@ -226,7 +306,6 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
         sooner. Keep an eye on your inbox.
       </motion.p>
 
-      {/* Recipient line */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -250,7 +329,6 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
         <span className="text-primary-soft">hiring@stratzi.ai</span>
       </motion.div>
 
-      {/* Reset link */}
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -279,26 +357,85 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
 }
 
 function Field({
+  id,
   label,
   type,
   placeholder,
+  value,
+  onChange,
+  error,
+  autoComplete,
+  inputMode,
   className = "",
 }: {
+  id: string;
   label: string;
   type: string;
   placeholder: string;
+  value: string;
+  onChange: (value: string) => void;
+  error?: string;
+  autoComplete?: string;
+  inputMode?: "email" | "text" | "tel" | "search" | "url";
   className?: string;
 }) {
+  const hasError = Boolean(error);
+
   return (
     <div className={className}>
-      <label className="block text-[10.5px] font-semibold tracking-[0.16em] uppercase text-white/65 mb-2">
+      <label
+        htmlFor={id}
+        className="block text-[10.5px] font-semibold tracking-[0.16em] uppercase text-white/65 mb-2"
+      >
         {label}
       </label>
       <input
+        id={id}
         type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-white/[0.04] border border-white/15 text-white text-[14px] px-4 py-3 rounded-lg outline-none transition-colors focus:border-primary-soft focus:bg-white/[0.07] placeholder:text-white/35"
+        autoComplete={autoComplete}
+        inputMode={inputMode}
+        aria-invalid={hasError || undefined}
+        aria-describedby={hasError ? `${id}-error` : undefined}
+        className={[
+          "w-full bg-white/[0.04] text-white text-[14px] px-4 py-3 rounded-lg outline-none transition-colors placeholder:text-white/35",
+          hasError
+            ? "border border-rose-300/55 focus:border-rose-300 focus:bg-rose-300/[0.06]"
+            : "border border-white/15 focus:border-primary-soft focus:bg-white/[0.07]",
+        ].join(" ")}
       />
+      <AnimatePresence>
+        {hasError && (
+          <motion.p
+            id={`${id}-error`}
+            role="alert"
+            initial={{ opacity: 0, y: -4, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: "auto" }}
+            exit={{ opacity: 0, y: -4, height: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-rose-300 overflow-hidden"
+          >
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="flex-shrink-0"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            {error}
+          </motion.p>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
